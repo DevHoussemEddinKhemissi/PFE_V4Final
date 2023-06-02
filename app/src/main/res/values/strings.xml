@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">PFE_V4Final</string>
+    <string name="home_text">Home</string>
+    <string name="like_text">Like</string>
+    <string name="search_text">Search</string>
+    <string name="shop_text">Shop</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_profile_edit">ProfileEdit</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+
+    <string name="facebook_app_id">2867993136677703</string>
+    <string name="fb_login_protocol_scheme">fb2867993136677703</string>
+    <string name="facebook_client_token">9382f22d6b4fb84ea9a5db2c20d96f20</string>
+</resources>
