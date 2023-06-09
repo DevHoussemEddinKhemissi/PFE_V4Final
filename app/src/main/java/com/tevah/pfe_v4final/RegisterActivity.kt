@@ -37,7 +37,7 @@ class RegisterActivity : AppCompatActivity() {
                 password = edittextpassword.text.toString(),
                 image = ""
             )
-            retrofit.createUser(obj).enqueue(
+            retrofit.CreateUser(obj).enqueue(
                 object : retrofit2.Callback<UserRegisterResponce>{
                     override fun onResponse(call: Call<UserRegisterResponce>, response: Response<UserRegisterResponce>) {
 
