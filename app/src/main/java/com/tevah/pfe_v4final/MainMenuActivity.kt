@@ -4,7 +4,10 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.WindowManager
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.tevah.pfe_v4final.API.RetrofitAPIInterface
 import com.tevah.pfe_v4final.API.ServiceBuilderRetrofit
 import com.tevah.pfe_v4final.Models.UserRegisterResponce
@@ -38,6 +41,24 @@ class MainMenuActivity : AppCompatActivity() {
 
             }
         )
+        window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        val navigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
+
+        supportFragmentManager.beginTransaction().replace(R.id.body_container, HomeFragment()).commit()
+        navigationView.setSelectedItemId(R.id.nac_home)
+        navigationView.setOnItemSelectedListener { item ->
+            val fragment: Fragment? = when (item.itemId) {
+                R.id.nac_home -> HomeFragment()
+                R.id.nac_like -> ProductsFragment()
+                R.id.nac_seach -> AccountFragment()
+                R.id.nac_shop -> WishListFragment()
+                else -> null
+            }
+            if (fragment != null) {
+                supportFragmentManager.beginTransaction().replace(R.id.body_container, fragment).commit()
+            }
+            true
+        }
 
     }
 }
