@@ -11,7 +11,7 @@ android {
     defaultConfig {
         applicationId "com.tevah.pfe_v4final"
         minSdk 30
-        targetSdk 33
+        targetSdk 32
         versionCode 1
         versionName "1.0"
 
@@ -42,7 +42,6 @@ dependencies {
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.5'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
-    implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
     //maps
     implementation 'com.google.android.libraries.places:places:3.1.0'
     implementation 'com.google.maps:google-maps-services:2.1.2'

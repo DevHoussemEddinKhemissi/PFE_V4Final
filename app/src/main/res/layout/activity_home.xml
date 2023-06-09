@@ -81,13 +81,6 @@
                             android:layout_height="match_parent"
                             android:orientation="horizontal">
 
-                            <com.denzcoskun.imageslider.ImageSlider
-                                android:id="@+id/image_slider"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                app:iss_auto_cycle="true"
-                                app:iss_delay="0"
-                                app:iss_period="10000" />
                         </LinearLayout>
 
                     </androidx.constraintlayout.widget.ConstraintLayout>

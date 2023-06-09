@@ -30,7 +30,7 @@
         android:textStyle="bold" />
 
     <EditText
-        android:id="@+id/username"
+        android:id="@+id/email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/signin"
@@ -39,20 +39,19 @@
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/edittextbackground"
-        android:textColorHint="#9E9E9E"
+        android:drawableLeft="@drawable/messageicon"
 
-        android:drawableLeft="@drawable/profileicon"
         android:drawablePadding="20dp"
-        android:hint="Nom d'utilisateur"
+        android:hint="Email"
         android:padding="20dp"
         android:textColor="@color/black"
-        />
+        android:textColorHint="#9E9E9E" />
 
     <EditText
         android:id="@+id/password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/username"
+        android:layout_below="@id/email"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="10dp"

@@ -1,15 +1,14 @@
 package com.tevah.pfe_v4final
 
+import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.facebook.CallbackManager
 import com.facebook.CallbackManager.Factory.create
@@ -23,6 +22,14 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
+import com.tevah.pfe_v4final.API.RetrofitAPIInterface
+import com.tevah.pfe_v4final.API.ServiceBuilderRetrofit
+import com.tevah.pfe_v4final.Models.UserRegister
+import com.tevah.pfe_v4final.Models.UserRegisterResponce
+import com.tevah.pfe_v4final.Models.UserSignin
+import com.tevah.pfe_v4final.Models.UserSigninResponce
+import retrofit2.Call
+import retrofit2.Response
 import java.util.*
 
 class AuthentificationActivity : AppCompatActivity() {
@@ -35,6 +42,11 @@ class AuthentificationActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authentification)
+        val sharedPref = getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
+        val editor = sharedPref.edit()
+        val retrofit = ServiceBuilderRetrofit.buildService(RetrofitAPIInterface::class.java)
+        val edittextemail = findViewById<EditText>(R.id.email)
+        val edittextpassword = findViewById<EditText>(R.id.password)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             val view = window.decorView
             val insetsController = view.windowInsetsController
@@ -59,21 +71,72 @@ class AuthentificationActivity : AppCompatActivity() {
             startActivity(intent)
         }
         val btn_click_me = findViewById(R.id.logibtn) as Button
-        // set on-click listener
+        // set on-click listener For Normal SignUP
         btn_click_me.setOnClickListener {
             Toast.makeText(this@AuthentificationActivity, "You clicked me.", Toast.LENGTH_SHORT).show()
-            intent = Intent(applicationContext, MainMenuActivity()::class.java)
-            startActivity(intent)
+
+
+            val obj = UserSignin(
+
+                email = edittextemail.text.toString(),
+                password = edittextpassword.text.toString(),
+
+            )
+            retrofit.createUser(obj).enqueue(
+                object : retrofit2.Callback<UserSigninResponce>{
+                    override fun onResponse(call: Call<UserSigninResponce>, response: Response<UserSigninResponce>) {
+
+
+                        val bat = response.body().toString()
+
+                        Toast.makeText(this@AuthentificationActivity,bat, Toast.LENGTH_LONG).show()
+                        Log.d("Success", bat)
+                        if (response.body()?.message.toString()=="User Found."){
+                            val battoken = response.body()?.accessToken.toString()
+                            editor.putString("Token", battoken)
+                            editor.apply()
+                            Log.d("User Found", bat)
+                            intent = Intent(applicationContext, MainMenuActivity()::class.java)
+                                startActivity(intent)
+
+                        }
+                        else if (response.body()?.message.toString()=="User Not Found.") {
+                            Log.d("User Not Found", bat)
+                        }
+                        else {
+                            Log.d("Server issues", bat)
+                        }
+
+
+                    }
+
+                    override fun onFailure(call: Call<UserSigninResponce>, t: Throwable) {
+                        Toast.makeText(this@AuthentificationActivity,t.toString(), Toast.LENGTH_LONG).show()
+                        Log.d("onFailure", t.toString())
+                    }
+
+
+                }
+            )
+
+
+
+
+
+
+            /*intent = Intent(applicationContext, MainMenuActivity()::class.java)
+            startActivity(intent)*/
+
         }
 
         val btn_login_google = findViewById(R.id.loginGoogleButton) as ImageView
-        // set on-click listener
+        // set on-click listener For Google
         btn_login_google.setOnClickListener {
             this.loginViaGoogle()
         }
 
         val btn_login_facebook = findViewById(R.id.loginFacebookButton) as ImageView
-        // set on-click listener
+        // set on-click listener For Facebook
         btn_login_facebook.setOnClickListener {
             loginViaFacebook()
         }
