@@ -7,6 +7,4 @@ class FoodLocation {
     val name: String = ""
     val distanceKm: String? = null
     val trajectTime: String? = null
-
-
 }
