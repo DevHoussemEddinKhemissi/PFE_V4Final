@@ -6,5 +6,6 @@ data class UserRegister(
     val password: String,
     val roles: List<String>,
     val tel: String,
-    val username: String
+    val username: String,
+    val image:String
 )

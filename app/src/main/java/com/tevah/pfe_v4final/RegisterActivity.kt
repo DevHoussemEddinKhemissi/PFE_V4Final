@@ -16,30 +16,36 @@ import retrofit2.Response
 class RegisterActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         setContentView(R.layout.activity_register)
         val retrofit = ServiceBuilderRetrofit.buildService(RetrofitAPIInterface::class.java)
         val edittextusername = findViewById<EditText>(R.id.username)
         val edittextemail = findViewById<EditText>(R.id.email)
         val edittextpassword = findViewById<EditText>(R.id.password)
 
-        val obj = UserRegister(
-            name = edittextusername.text.toString(),
-            username = "housem",
-            email = edittextemail.text.toString(),
-            tel = "22522229",
-            roles = listOf("user"),
-            password = edittextpassword.text.toString()
-        )
+
             val buttonsignup = findViewById<Button>(R.id.signupbtn)
 
         buttonsignup.setOnClickListener {
+            val obj = UserRegister(
+                name = edittextusername.text.toString(),
+                username = "housem",
+                email = edittextemail.text.toString(),
+                tel = "22522229",
+                roles = listOf("user"),
+                password = edittextpassword.text.toString(),
+                image = ""
+            )
             retrofit.createUser(obj).enqueue(
                 object : retrofit2.Callback<UserRegisterResponce>{
                     override fun onResponse(call: Call<UserRegisterResponce>, response: Response<UserRegisterResponce>) {
 
 
+                        val bat = obj.toString()
 
-                        Log.d("Success", response.body().toString())
+                        Toast.makeText(this@RegisterActivity,bat, Toast.LENGTH_LONG).show()
+                        Log.d("Success", obj.toString())
 
 
                     }
