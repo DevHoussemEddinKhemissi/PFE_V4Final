@@ -14,6 +14,6 @@ interface RetrofitAPIInterface {
     @POST("/api/auth/signin")
     fun LoginViaEmail(@Body user: UserSignin): Call<UserSigninResponce>
     @GET("/api/test/user")
-    fun GetUSER(@Header("Authorization") token: String):Call<UserRetrieve>
+    fun GetUSER(@Header("x-access-token") token: String):Call<UserRetrieve>
 
 }

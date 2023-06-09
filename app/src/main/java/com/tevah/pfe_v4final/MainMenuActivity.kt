@@ -4,6 +4,13 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
+import com.tevah.pfe_v4final.API.RetrofitAPIInterface
+import com.tevah.pfe_v4final.API.ServiceBuilderRetrofit
+import com.tevah.pfe_v4final.Models.UserRegisterResponce
+import com.tevah.pfe_v4final.Models.UserRetrieve
+import retrofit2.Call
+import retrofit2.Response
 
 class MainMenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -13,6 +20,24 @@ class MainMenuActivity : AppCompatActivity() {
         val value = sharedPref.getString("Token", "")
         Log.d("RetriveLogin", value.toString())
 
+        val retrofit = ServiceBuilderRetrofit.buildService(RetrofitAPIInterface::class.java)
+        retrofit.GetUSER(value.toString()).enqueue(
+            object : retrofit2.Callback<UserRetrieve>{
+                override fun onResponse(
+                    call: Call<UserRetrieve>,
+                    response: Response<UserRetrieve>
+                ) {
+
+                    Log.d("RetriveLogin", response.body().toString())
+                }
+
+                override fun onFailure(call: Call<UserRetrieve>, t: Throwable) {
+                    Log.d("RetriveLoginFail", "No connection to server")
+                }
+
+
+            }
+        )
 
     }
 }
