@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailProduit">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="20dp"
+            >
+
+            <!-- Dish Image -->
+            <ImageView
+                android:id="@+id/ivDishImage"
+                android:background="@drawable/detail_produit_image_shape"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@drawable/exempleplat" />
+
+            <!-- Dish Name -->
+            <TextView
+                android:id="@+id/tvDishName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ivDishImage"
+                android:layout_marginTop="16dp"
+                android:text="Dish Name"
+                android:textSize="24sp"
+                android:textColor="@android:color/black"
+                android:textStyle="bold" />
+
+            <!-- Dish Description -->
+            <TextView
+                android:id="@+id/tvDishDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvDishName"
+                android:layout_marginTop="8dp"
+                android:text="Dish Description"
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
+
+            <!-- Dish Price -->
+            <TextView
+                android:id="@+id/tvDishPrice"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvDishDescription"
+                android:layout_marginTop="8dp"
+                android:text="Price: $10.99"
+                android:textSize="16sp"
+                android:textColor="@android:color/black" />
+
+            <!-- Stock Quantity -->
+            <TextView
+                android:id="@+id/tvStockQuantity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvDishPrice"
+                android:layout_marginTop="8dp"
+                android:text="In Stock: 5"
+                android:textSize="16sp"
+                android:textColor="@android:color/black" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/tvRestaurantDetailsCard"
+                android:layout_below="@id/tvStockQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp"
+                android:background="@drawable/produit_detail_restaurant_card_shape"
+                >
+                <!-- Restaurant Name -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="top"
+                    android:orientation="horizontal"
+                    android:padding="5dp">
+
+                    <!-- Restaurant Image -->
+                    <ImageView
+                        android:id="@+id/ivRestaurantImage"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/pizzaria" />
+
+                    <!-- Restaurant Name -->
+                    <TextView
+                        android:id="@+id/tvRestaurantName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginStart="16dp"
+                        android:text="Restaurant Name"
+                        android:textColor="@android:color/black"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <!-- Restaurant Distance -->
+            <TextView
+                android:id="@+id/tvRestaurantDistance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tvRestaurantDetailsCard"
+                android:layout_marginTop="8dp"
+                android:text="Distance: 2.5 miles"
+                android:textSize="16sp"
+                android:textColor="@android:color/black" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/BuyCard"
+                android:layout_below="@id/tvRestaurantDistance"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="6dp"
+                android:background="@drawable/disclaimer_button_background_shape"
+                >w
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:text="Buy Now"
+                    android:textSize="16sp"
+                    android:textColor="@android:color/white"/>
+            </androidx.cardview.widget.CardView>
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

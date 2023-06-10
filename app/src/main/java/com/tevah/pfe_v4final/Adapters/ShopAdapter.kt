@@ -13,7 +13,7 @@ import com.tevah.pfe_v4final.Models.Shop
 import com.tevah.pfe_v4final.R
 import com.tevah.pfe_v4final.RestaurantDetailsActivity
 
-class ShopAdapter(private val shopModels: ArrayList<Shop>) : RecyclerView.Adapter<ShopAdapter.MyViewHolder>() {
+class ShopAdapter(private val shopModels: List<Shop>) : RecyclerView.Adapter<ShopAdapter.MyViewHolder>() {
     private val TAG = "TasksSample"
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -23,9 +23,9 @@ class ShopAdapter(private val shopModels: ArrayList<Shop>) : RecyclerView.Adapte
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val shopModel = shopModels[position]
-        holder.img.setImageResource(shopModel.image)
+        //holder.img.setImageResource(shopModel.image)
         holder.name.text = shopModel.name
-        holder.adresse.text = shopModel.adresse
+        holder.adresse.text = shopModel.adress
         holder.button.setOnClickListener {
             Log.i(TAG, "onClick: " + shopModel.name)
             val intent = Intent(it.context, RestaurantDetailsActivity::class.java)

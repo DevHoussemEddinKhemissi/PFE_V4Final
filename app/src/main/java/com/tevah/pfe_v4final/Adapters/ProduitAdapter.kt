@@ -6,10 +6,11 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import com.tevah.pfe_v4final.Models.Produit
 import com.tevah.pfe_v4final.R
 
-class ProduitAdapter (private val produit: ArrayList<Produit>) :
+class ProduitAdapter (private val produit: List<Produit>) :
     RecyclerView.Adapter<ProduitAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -32,9 +33,15 @@ class ProduitAdapter (private val produit: ArrayList<Produit>) :
         private val time: TextView = itemView.findViewById(R.id.time)
 
         fun bind(model: Produit) {
-            img.setImageResource(model.image)
-            distance.text = model.distance
-            time.text = model.time
+            // Set the product data to the views
+            val imagePath = model.getProductImageUrl()
+            Picasso
+                .get()
+                .load(imagePath)
+                .into(img);
+            distance.text = model.name
+            time.text = model.shop.name
+
         }
     }
 }

@@ -2,6 +2,7 @@ package com.tevah.pfe_v4final
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -24,10 +25,7 @@ import com.google.android.gms.common.api.ApiException
 import com.google.android.gms.tasks.Task
 import com.tevah.pfe_v4final.API.RetrofitAPIInterface
 import com.tevah.pfe_v4final.API.ServiceBuilderRetrofit
-import com.tevah.pfe_v4final.Models.UserRegister
-import com.tevah.pfe_v4final.Models.UserRegisterResponce
-import com.tevah.pfe_v4final.Models.UserSignin
-import com.tevah.pfe_v4final.Models.UserSigninResponce
+import com.tevah.pfe_v4final.Models.*
 import retrofit2.Call
 import retrofit2.Response
 import java.util.*
@@ -38,12 +36,20 @@ class AuthentificationActivity : AppCompatActivity() {
     var callbackManager: CallbackManager? = null
     var G_SIGN_IN = 0x111111
     var FB_SIGN_IN = 64206
+    lateinit var sharedPref: SharedPreferences
+    lateinit var editor:SharedPreferences.Editor
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authentification)
-        val sharedPref = getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
-        val editor = sharedPref.edit()
+        sharedPref = getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
+        editor = sharedPref.edit()
+        val value = sharedPref.getString("Token", null)
+        if (value != null) {
+            intent = Intent(applicationContext, MainMenuActivity()::class.java)
+            startActivity(intent)
+            finish()
+        }
         val retrofit = ServiceBuilderRetrofit.buildService(RetrofitAPIInterface::class.java)
         val edittextemail = findViewById<EditText>(R.id.email)
         val edittextpassword = findViewById<EditText>(R.id.password)
@@ -150,7 +156,9 @@ class AuthentificationActivity : AppCompatActivity() {
 
                 override fun onSuccess(loginResult: LoginResult) {
                     // App code
-                    startActivity(Intent(this@AuthentificationActivity, TestActivity::class.java))
+                    val token = loginResult.accessToken.token
+                    logViaFacebookNode(token)
+                    //startActivity(Intent(this@AuthentificationActivity, TestActivity::class.java))
                 }
 
                 override fun onCancel() {
@@ -163,7 +171,7 @@ class AuthentificationActivity : AppCompatActivity() {
                     Toast.makeText(applicationContext, "Login via Facebook failed", Toast.LENGTH_LONG).show()
                 }
             })
-        LoginManager.getInstance().logInWithReadPermissions(this@AuthentificationActivity, listOf("email"))
+        LoginManager.getInstance().logInWithReadPermissions(this@AuthentificationActivity, listOf("email","public_profile"))
     }
 
     fun loginViaGoogle(){
@@ -200,8 +208,10 @@ class AuthentificationActivity : AppCompatActivity() {
 
             // Signed in successfully, show authenticated UI.
             //updateUI(account);
-            val intent = Intent(this@AuthentificationActivity, TestActivity::class.java)
-            startActivity(intent)
+            val token = account.idToken!!
+            //val intent = Intent(this@AuthentificationActivity, TestActivity::class.java)
+            //startActivity(intent)
+            logViaGoogleNode(token)
         } catch (e: ApiException) {
             // The ApiException status code indicates the detailed failure reason.
             // Please refer to the GoogleSignInStatusCodes class reference for more information.
@@ -209,5 +219,87 @@ class AuthentificationActivity : AppCompatActivity() {
             
             //updateUI(null);
         }
+    }
+
+    private fun logViaFacebookNode(token: String){
+        val retrofit = ServiceBuilderRetrofit.buildService(RetrofitAPIInterface::class.java)
+        val request = LogViaFacebookNodeRequest(token)
+        retrofit.LoginViaFacebook(request).enqueue(
+            object : retrofit2.Callback<UserSigninResponce>{
+                override fun onResponse(
+                    call: Call<UserSigninResponce>,
+                    response: Response<UserSigninResponce>
+                ) {
+                    val bat = response.body().toString()
+
+                    Toast.makeText(this@AuthentificationActivity,bat, Toast.LENGTH_LONG).show()
+                    Log.d("Success", bat)
+                    if (response.body()?.message.toString()=="User Found."){
+                        val battoken = response.body()?.accessToken.toString()
+                        editor.putString("Token", battoken)
+                        editor.apply()
+                        Log.d("User Found", bat)
+                        intent = Intent(applicationContext, MainMenuActivity()::class.java)
+                        startActivity(intent)
+
+                    }
+                    else if (response.body()?.message.toString()=="User Not Found.") {
+                        Log.d("User Not Found", bat)
+                    }
+                    else {
+                        Log.d("Server issues", bat)
+                    }
+
+
+                }
+
+                override fun onFailure(call: Call<UserSigninResponce>, t: Throwable) {
+                    Toast.makeText(baseContext, "Failed login facebook from node",Toast.LENGTH_SHORT).show()
+                }
+
+
+            }
+        )
+    }
+
+    private fun logViaGoogleNode(token: String){
+        val retrofit = ServiceBuilderRetrofit.buildService(RetrofitAPIInterface::class.java)
+        val request = LoginViaGoogleRequest(token)
+        retrofit.LoginViaGoogle(request).enqueue(
+            object : retrofit2.Callback<UserSigninResponce>{
+                override fun onResponse(
+                    call: Call<UserSigninResponce>,
+                    response: Response<UserSigninResponce>
+                ) {
+                    val bat = response.body().toString()
+
+                    Toast.makeText(this@AuthentificationActivity,bat, Toast.LENGTH_LONG).show()
+                    Log.d("Success", bat)
+                    if (response.body()?.message.toString()=="User Found."){
+                        val battoken = response.body()?.accessToken.toString()
+                        editor.putString("Token", battoken)
+                        editor.apply()
+                        Log.d("User Found", bat)
+                        intent = Intent(applicationContext, MainMenuActivity()::class.java)
+                        startActivity(intent)
+
+                    }
+                    else if (response.body()?.message.toString()=="User Not Found.") {
+                        Log.d("User Not Found", bat)
+                    }
+                    else {
+                        Log.d("Server issues", bat)
+                    }
+
+
+                }
+
+                override fun onFailure(call: Call<UserSigninResponce>, t: Throwable) {
+                    Toast.makeText(baseContext, "Failed login facebook from node",Toast.LENGTH_SHORT).show()
+                }
+
+
+            }
+        )
     }
 }

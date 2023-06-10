@@ -23,17 +23,20 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".DetailProduit"
+            android:exported="false" />
+        <activity
             android:name=".RestaurantDetailsActivity"
             android:exported="false" />
         <activity
             android:name=".MainMenuActivity"
-            android:exported="false"></activity>
+            android:exported="false" />
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".AuthentificationActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".SplashScreenActivity"
             android:exported="true">

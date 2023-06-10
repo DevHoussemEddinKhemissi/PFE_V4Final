@@ -41,8 +41,9 @@
                     android:layout_marginTop="32dp"
                     android:text="Bonjour Bernard"
                     android:textColor="#dd3d00"
-                    android:textSize="20sp"
+                    android:textSize="14sp"
                     android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@+id/profileImageViewHome"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,14 +54,15 @@
                     android:layout_marginTop="8dp"
                     android:text=" Commandez et Mangez"
                     android:textColor="#000000"
-                    android:textSize="20sp"
+                    android:textSize="16sp"
+                    app:layout_constraintEnd_toStartOf="@+id/profileImageViewHome"
                     app:layout_constraintStart_toStartOf="@+id/textView"
                     app:layout_constraintTop_toBottomOf="@+id/textView" />
 
                 <ImageView
-                    android:id="@+id/imageView"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/profileImageViewHome"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_marginEnd="32dp"
                     android:src="@drawable/profile"
                     app:layout_constraintBottom_toBottomOf="@+id/textView3"

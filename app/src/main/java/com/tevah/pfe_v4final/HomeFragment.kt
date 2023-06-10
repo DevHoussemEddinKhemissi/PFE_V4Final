@@ -1,25 +1,30 @@
 package com.tevah.pfe_v4final
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.*
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.models.SlideModel
+import com.google.android.gms.maps.model.Circle
+import com.squareup.picasso.Picasso
+import com.squareup.picasso.Transformation
 import com.tevah.pfe_v4final.API.RetrofitAPIInterface
 import com.tevah.pfe_v4final.API.ServiceBuilderRetrofit
 import com.tevah.pfe_v4final.Adapters.ProduitAdapter
 import com.tevah.pfe_v4final.Adapters.ShopAdapter
-import com.tevah.pfe_v4final.Models.Produit
-import com.tevah.pfe_v4final.Models.Shop
-import com.tevah.pfe_v4final.Models.UserRetrieve
+import com.tevah.pfe_v4final.Models.*
 import retrofit2.Call
 import retrofit2.Response
 
@@ -74,6 +79,12 @@ class HomeFragment : Fragment() {
                     var textview = view.findViewById<TextView>(R.id.textView)
                     textview.setText("Bonjour "+response.body()?.user?.name.toString())
                     Log.d("RetriveLogin", response.body().toString())
+                    val profileImage = view.findViewById<ImageView>(R.id.profileImageViewHome)
+                    Picasso
+                        .get()
+                        .load(response.body()?.user?.image)
+                        .transform(RoundedTransformation(50F))
+                        .into(profileImage);
                 }
 
                 override fun onFailure(call: Call<UserRetrieve>, t: Throwable) {
@@ -87,31 +98,12 @@ class HomeFragment : Fragment() {
         recyclerViewCategoryList = view.findViewById(R.id.recyclerView3)
         recyclerViewCategoryList.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         dataholder1 = ArrayList()
-        val c1 = Produit(R.drawable.exempleplat, "Poulet Biryani ", "Hôtel Ambrosia  \n & Restaurant")
-        val c2 = Produit(R.drawable.exempleplat1, "Sauce Tonkatsu", "Handi-Restaurant, \n Chittagong")
-        val c3 = Produit(R.drawable.exempleplat2, "Poulet Katsu", "Hôtel Ambrosia  \n & Restaurant")
-        val c4 = Produit(R.drawable.exempleplat, "12km", "12min")
-        val c5 = Produit(R.drawable.exempleplat, "50km", "30min")
-        dataholder1.add(c1)
-        dataholder1.add(c2)
-        dataholder1.add(c3)
-        dataholder1.add(c4)
-        dataholder1.add(c5)
+
         recyclerViewCategoryList.adapter = ProduitAdapter(dataholder1)
 
         recyclerViewShopList = view.findViewById(R.id.recyclerView1)
         recyclerViewShopList.layoutManager = LinearLayoutManager(context)
         dataholder2 = ArrayList()
-        val s1 = Shop(R.drawable.exmepleresto, "Ambroisie Hôtel & Restaurant", "kazi Deiry, col du \n Taiger Chittagong")
-        val s2 = Shop(R.drawable.exmepleresto1, "Restaurant Tava", " Surson Rue, \n Chittagong")
-        val s3 = Shop(R.drawable.exmepleresto, "10km", "10min")
-        val s4 = Shop(R.drawable.exmepleresto, "12km", "12min")
-        val s5 = Shop(R.drawable.exmepleresto, "50km", "30min")
-        dataholder2.add(s1)
-        dataholder2.add(s2)
-        dataholder2.add(s3)
-        dataholder2.add(s4)
-        dataholder2.add(s5)
         recyclerViewShopList.adapter = ShopAdapter(dataholder2)
 
         imageSlider = view.findViewById(R.id.image_slider)
@@ -119,7 +111,8 @@ class HomeFragment : Fragment() {
         imagelist.add(SlideModel(imagePath = R.drawable.testpub2, scaleType = null))
         imagelist.add(SlideModel(imagePath = R.drawable.testpub1, scaleType = null))
         imageSlider.setImageList(imagelist)
-
+        fetchAllProducts()
+        fetchAllShops()
         return view
     }
 
@@ -134,5 +127,89 @@ class HomeFragment : Fragment() {
             fragment.arguments = args
             return fragment
         }
+    }
+
+    private fun fetchAllProducts(){
+        val retrofit = ServiceBuilderRetrofit.buildService(RetrofitAPIInterface::class.java)
+        retrofit.fetchAllProducts().enqueue(
+            object : retrofit2.Callback<FetchAllProductResponse>{
+                override fun onResponse(
+                    call: Call<FetchAllProductResponse>,
+                    response: Response<FetchAllProductResponse>
+                ) {
+                    response.body()?.let {
+                        dataholder1.clear(); // Assuming myDataList is the existing data source
+                        dataholder1.addAll(it.product);
+                        recyclerViewCategoryList.adapter?.notifyDataSetChanged()
+                    }
+
+                }
+
+                override fun onFailure(call: Call<FetchAllProductResponse>, t: Throwable) {
+                    Toast.makeText(context, "Failed to load products", Toast.LENGTH_SHORT).show()
+                }
+
+
+            }
+        )
+    }
+
+    private fun fetchAllShops(){
+        val retrofit = ServiceBuilderRetrofit.buildService(RetrofitAPIInterface::class.java)
+        retrofit.fetchAllShops().enqueue(
+            object : retrofit2.Callback<FetchAllShopsResponse>{
+                override fun onResponse(
+                    call: Call<FetchAllShopsResponse>,
+                    response: Response<FetchAllShopsResponse>
+                ) {
+                    response.body()?.let {
+                        dataholder2.clear(); // Assuming myDataList is the existing data source
+                        dataholder2.addAll(it.shop);
+                        recyclerViewShopList.adapter?.notifyDataSetChanged()
+                    }
+
+                }
+
+                override fun onFailure(call: Call<FetchAllShopsResponse>, t: Throwable) {
+
+                    Toast.makeText(context, "Failed to load products",Toast.LENGTH_SHORT).show()
+                }
+
+
+            }
+        )
+    }
+}
+
+class RoundedTransformation(private val radius: Float) : Transformation {
+
+    override fun transform(source: Bitmap): Bitmap {
+        val width = source.width
+        val height = source.height
+
+        val output = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+
+        val paint = Paint().apply {
+            isAntiAlias = true
+            shader = BitmapShader(source, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
+        }
+
+        val canvas = Canvas(output)
+        canvas.drawRoundRect(
+            RectF(0F, 0F, width.toFloat(), height.toFloat()),
+            radius,
+            radius,
+            paint
+        )
+
+        if (source != output) {
+            source.recycle()
+        }
+
+        return output
+    }
+
+    override fun key(): String {
+        return "rounded(radius=$radius)"
     }
 }

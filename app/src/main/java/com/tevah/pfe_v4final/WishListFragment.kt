@@ -5,6 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.tevah.pfe_v4final.Adapters.CardAdapter
+import com.tevah.pfe_v4final.Models.Card
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -17,6 +21,8 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class WishListFragment : Fragment() {
+    private lateinit var recyclerViewCardList: RecyclerView
+    private lateinit var dataholder3: ArrayList<Card>
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -33,8 +39,24 @@ class WishListFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_wish_list, container, false)
+        val view = inflater.inflate(R.layout.fragment_wish_list, container, false)
+
+        recyclerViewCardList = view.findViewById(R.id.recyclerView3)
+        val layoutManager = LinearLayoutManager(requireContext())
+        layoutManager.orientation = RecyclerView.VERTICAL
+        recyclerViewCardList.layoutManager = layoutManager
+
+        dataholder3 = ArrayList()
+        val s1 = Card(R.drawable.testfood1, "Crabe frais spacieux", "Kita Waroenk", "€ 65")
+        val s2 = Card(R.drawable.testfood2, "Les Penne Rigate", "Italiennes", "€ 35")
+        val s3 = Card(R.drawable.testfood3, "Sandwich Libanais", "libanaise", "€ 20")
+
+        dataholder3.add(s1)
+        dataholder3.add(s2)
+        dataholder3.add(s3)
+
+        recyclerViewCardList.adapter = CardAdapter(dataholder3)
+        return view
     }
 
     companion object {

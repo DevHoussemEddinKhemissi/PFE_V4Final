@@ -1,14 +1,17 @@
 package com.tevah.pfe_v4final.Adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.tevah.pfe_v4final.DetailProduit
 import com.tevah.pfe_v4final.Models.Produit
 import com.tevah.pfe_v4final.R
+import com.tevah.pfe_v4final.RestaurantDetailsActivity
 
 class ProduitGridLayoutAdapter (private val context: Context, var productList: List<Produit>) : BaseAdapter() {
 
@@ -34,6 +37,7 @@ class ProduitGridLayoutAdapter (private val context: Context, var productList: L
             holder.productImage = view.findViewById(R.id.productImage)
             holder.productTitle = view.findViewById(R.id.productTitle)
             holder.productPrice = view.findViewById(R.id.productPrice)
+            holder.viewproduit = view.findViewById(R.id.produit_click_id)
             view.tag = holder
         } else {
             view = convertView
@@ -44,8 +48,13 @@ class ProduitGridLayoutAdapter (private val context: Context, var productList: L
 
         // Set the product data to the views
         holder.productImage.setImageResource(R.drawable.exempleplat)
-        holder.productTitle.text = product.time
-        holder.productPrice.text = product.distance
+        holder.productTitle.text = product.name
+        holder.productPrice.text = product.prix
+        holder.viewproduit.setOnClickListener{
+            val produitid = product.id
+            val intent = Intent(it.context, DetailProduit::class.java)
+            it.context.startActivity(intent)
+        }
 
         return view
     }
@@ -59,5 +68,7 @@ class ProduitGridLayoutAdapter (private val context: Context, var productList: L
         lateinit var productImage: ImageView
         lateinit var productTitle: TextView
         lateinit var productPrice: TextView
+        lateinit var viewproduit : View
+       // val viewproduit:View = itemView.findViewById(R.id.produit_click_id)
     }
 }
