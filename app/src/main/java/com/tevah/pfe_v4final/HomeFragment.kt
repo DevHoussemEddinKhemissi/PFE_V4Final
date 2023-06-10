@@ -1,18 +1,27 @@
 package com.tevah.pfe_v4final
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.models.SlideModel
+import com.tevah.pfe_v4final.API.RetrofitAPIInterface
+import com.tevah.pfe_v4final.API.ServiceBuilderRetrofit
 import com.tevah.pfe_v4final.Adapters.ProduitAdapter
 import com.tevah.pfe_v4final.Adapters.ShopAdapter
 import com.tevah.pfe_v4final.Models.Produit
 import com.tevah.pfe_v4final.Models.Shop
+import com.tevah.pfe_v4final.Models.UserRetrieve
+import retrofit2.Call
+import retrofit2.Response
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -25,6 +34,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class HomeFragment : Fragment() {
+    private lateinit var sharedPreferences: SharedPreferences
     private lateinit var adapter: RecyclerView.Adapter<*>
     private lateinit var recyclerViewCategoryList: RecyclerView
     private lateinit var recyclerViewShopList: RecyclerView
@@ -42,12 +52,37 @@ class HomeFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
-
+    private fun getValueFromSharedPreferences(): String? {
+        // Retrieve the value using the key
+        return sharedPreferences.getString("key", null)
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
+        sharedPreferences = requireActivity().getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
+        val value = sharedPreferences.getString("Token", "")
+        Log.d("RetriveLogin", value.toString())
+        val retrofit = ServiceBuilderRetrofit.buildService(RetrofitAPIInterface::class.java)
+        retrofit.GetUSER(value.toString()).enqueue(
+            object : retrofit2.Callback<UserRetrieve>{
+                override fun onResponse(
+                    call: Call<UserRetrieve>,
+                    response: Response<UserRetrieve>
+                ) {
+                    var textview = view.findViewById<TextView>(R.id.textView)
+                    textview.setText("Bonjour "+response.body()?.user?.name.toString())
+                    Log.d("RetriveLogin", response.body().toString())
+                }
+
+                override fun onFailure(call: Call<UserRetrieve>, t: Throwable) {
+                    Log.d("RetriveLoginFail", "No connection to server")
+                }
+
+
+            }
+        )
 
         recyclerViewCategoryList = view.findViewById(R.id.recyclerView3)
         recyclerViewCategoryList.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)

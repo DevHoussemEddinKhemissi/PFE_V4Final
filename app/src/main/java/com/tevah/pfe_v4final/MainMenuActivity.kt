@@ -19,7 +19,7 @@ class MainMenuActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_menu)
-        val sharedPref = getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
+      /*  val sharedPref = getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
         val value = sharedPref.getString("Token", "")
         Log.d("RetriveLogin", value.toString())
 
@@ -40,7 +40,7 @@ class MainMenuActivity : AppCompatActivity() {
 
 
             }
-        )
+        )*/
         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         val navigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
 

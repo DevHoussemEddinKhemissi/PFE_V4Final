@@ -4,11 +4,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ProductsFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <!-- activity_main.xml -->
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical">
 
+        <!-- Search Bar -->
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="8dp">
+
+            <EditText
+                android:id="@+id/searchEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_gravity="top"
+                android:hint="Search products"
+                android:inputType="text" />
+
+            <Button
+                android:id="@+id/searchButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Disclaimer" />
+
+        </LinearLayout>
+
+        <!-- Grid Layout -->
+        <GridView
+            android:id="@+id/productGridView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:numColumns="2"
+            android:verticalSpacing="8dp"
+            android:horizontalSpacing="8dp"
+            android:padding="8dp"
+            android:stretchMode="columnWidth"
+            android:gravity="center"
+            android:rowCount="10" />
+
+    </LinearLayout>
 </FrameLayout>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/popup_layout"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_centerInParent="true"
+    android:orientation="vertical"
+    android:background="@drawable/disclaimer_background_shape"
+    android:padding="16dp"
+    android:layout_margin="22dp">
+    <TextView
+        android:id="@+id/disclaimer_title_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Disclaimer"
+        android:textColor="#000000"
+        android:gravity="center_horizontal"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/disclaimer_content_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This is a disclaimer this is a disclaimer message this is a disclaimer message this is a disclaimer message this is a disclaimer message this is a disclaimer message this is a disclaimer message."
+        android:gravity="center_horizontal"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:autoSizeTextType="uniform" />
+
+    <Button
+        android:id="@+id/accept_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/disclaimer_button_background_shape"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:text="Accept"
+        android:textColor="#FFFFFF"
+        app:backgroundTint="#000000"
+        app:backgroundTintMode="add" />
+</LinearLayout>
