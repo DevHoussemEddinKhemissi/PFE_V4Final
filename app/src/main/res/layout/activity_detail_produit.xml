@@ -68,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tvDishPrice"
                 android:layout_marginTop="8dp"
-                android:text="In Stock: 5"
+                android:text="In Stock: 0"
                 android:textSize="16sp"
                 android:textColor="@android:color/black" />
 
@@ -127,22 +127,31 @@
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/BuyCard"
-                android:layout_below="@id/tvRestaurantDistance"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_below="@id/tvRestaurantDistance"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="6dp"
                 android:background="@drawable/disclaimer_button_background_shape"
-                >w
-                <TextView
+                app:cardCornerRadius="8dp"
+                app:cardElevation="6dp">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/AjouterWishlist"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="10dp"
-                    android:text="Buy Now"
-                    android:textSize="16sp"
-                    android:textColor="@android:color/white"/>
+                    android:layout_below="@id/password"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/buttons_corners"
+                    android:text="Ajouter au panier"
+
+                    android:textColor="@color/white"
+                    app:backgroundTint="@null" />
+
             </androidx.cardview.widget.CardView>
 
 

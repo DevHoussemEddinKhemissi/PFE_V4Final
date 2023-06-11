@@ -24,7 +24,7 @@
             android:layout_height="50dp"
             android:layout_weight="1"
             android:layout_gravity="center"
-            android:hint="Search products"
+            android:hint="Search produit"
             android:inputType="text"
             android:background="@drawable/searchview_backgound"
             android:drawableStart="@drawable/ic_baseline_search_24"
@@ -33,7 +33,9 @@
             android:paddingEnd="16dp"
             android:drawableTint ="#FD8585"
             android:maxLines="1"
-            android:textColorHint="#FD8585" />
+            android:textColorHint="#FD8585"
+            android:textColor="#FD8585"
+            />
 
 
             <!--<Button

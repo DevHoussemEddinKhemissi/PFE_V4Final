@@ -3,10 +3,7 @@ package com.tevah.pfe_v4final.API
 
 import com.tevah.pfe_v4final.Models.*
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface RetrofitAPIInterface {
 
@@ -29,5 +26,9 @@ interface RetrofitAPIInterface {
 
     @POST("/api/auth/viafacebook")
     fun LoginViaFacebook(@Body user: LogViaFacebookNodeRequest): Call<UserSigninResponce>
+
+
+    @POST("/api/test/FindOneproduct")
+    fun getData(@Body productDetailGet: ProductDetailGet): Call<ProduitDetailsPageResponce>
 
 }
