@@ -1,24 +1,28 @@
 package com.tevah.pfe_v4final
 
 
+import android.content.ContentValues
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 
 import androidx.appcompat.app.AppCompatActivity
+import com.squareup.picasso.Picasso
 
 import com.tevah.pfe_v4final.API.RetrofitAPIInterface
 import com.tevah.pfe_v4final.API.ServiceBuilderRetrofit
 
 import com.tevah.pfe_v4final.Models.*
 import com.tevah.pfe_v4final.SQLDB.Database
+import com.tevah.pfe_v4final.SQLDB.DatabaseContract
 
 import retrofit2.Call
 import retrofit2.Callback
 
 import retrofit2.Response
-import kotlin.math.log
 
 
 class DetailProduit : AppCompatActivity() {
@@ -26,6 +30,7 @@ class DetailProduit : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail_produit)
         val retrofit = ServiceBuilderRetrofit.buildService(RetrofitAPIInterface::class.java)
+        var stock: Product? = null
         val nametext = intent.getStringExtra("key")
         val name = "marhouga" // Set the desired name her
         val obj = ProductDetailGet(
@@ -42,9 +47,8 @@ class DetailProduit : AppCompatActivity() {
                     if (responceBody != null) {
                         val product: Product? = responceBody.product?.get(0) // Assuming there is only one product in the list
                         if (product != null) {
-                            val stock = product.stock
+                            stock = product
                             // Use the stock value as needed
-                            Log.d("reponce", "onResponse: "+stock.toString()+product.prix+product.name+product.description)
 
                         }
                     }
@@ -60,6 +64,25 @@ class DetailProduit : AppCompatActivity() {
                 Log.d("fail", "onResponse: "+t.toString())
             }
         })
+        // You can access the stock value outside the callback function
+        if (stock != null) {
+            // Use the stock value here
+            Log.d("reponce", "onResponse: "+ stock!!.image)
+            var textView = findViewById<TextView>(R.id.tvDishName)
+            textView.setText("Plat:"+ stock!!.name)
+            var textView1 = findViewById<TextView>(R.id.tvDishDescription)
+            textView1.setText("Description :"+ stock!!.description)
+            var textView2 = findViewById<TextView>(R.id.tvDishPrice)
+            textView2.setText("Prix :"+ stock!!.prix)
+            var textView3 = findViewById<TextView>(R.id.tvStockQuantity)
+            textView3.setText("quantité :"+stock.toString())
+            // ivDishImage
+            val profileImage1 = findViewById<ImageView>(R.id.ivDishImage)
+            Picasso
+                .get()
+                .load(stock!!.image)
+                .into(profileImage1)
+        }
 
        // Log.d("putextra", nametext.toString())
         // Initialize the DatabaseHelper
@@ -73,19 +96,54 @@ class DetailProduit : AppCompatActivity() {
         // Button click listener
         val addButton: Button = findViewById(R.id.AjouterWishlist)
         addButton.setOnClickListener {
-            // Insert data into the database
+            val imageinsert = stock?.image.toString()
+            val stockinsert = stock?.stock?.toInt()
+            val validityinsert = stock?.valid
+            val prixinsert= stock?.prix.toString()
+            val database = Database(this)
+
+            val db = database.writableDatabase
+
+            val productName = stock?.name.toString()
 
 
-            /* val db: SQLiteDatabase = database.writableDatabase
-             for (product in productList) {
-                 val values = ContentValues().apply {
-                     put(ProductContract.ProductEntry.COLUMN_NAME, product.name)
-                     put(ProductContract.ProductEntry.COLUMN_IMAGE, product.image)
-                     put(ProductContract.ProductEntry.COLUMN_PRIX, product.prix)
-                 }
-                 db.insert(ProductContract.ProductEntry.TABLE_NAME, null, values)
-             }
-             db.close()*/
+            val selection = "${DatabaseContract.WishlistEntry.COLUMN_NAME} = ?"
+            val selectionArgs = arrayOf(productName)
+            val cursor = db.query(
+                DatabaseContract.WishlistEntry.TABLE_NAME,
+                null,
+                selection,
+                selectionArgs,
+                null,
+                null,
+                null
+            )
+
+            if (cursor.count > 0) {
+
+                Toast.makeText(this, "Product name already exists", Toast.LENGTH_SHORT).show()
+            } else {
+
+                val contentValues = ContentValues().apply {
+                    put(DatabaseContract.WishlistEntry.COLUMN_NAME, productName)
+                    put(DatabaseContract.WishlistEntry.COLUMN_IMAGE, imageinsert)
+                    put(DatabaseContract.WishlistEntry.COLUMN_STOCK, stockinsert)
+                    put(DatabaseContract.WishlistEntry.COLUMN_VALID, validityinsert )
+                    put(DatabaseContract.WishlistEntry.COLUMN_PRIX, prixinsert)
+                }
+
+                val newRowId = db.insert(DatabaseContract.WishlistEntry.TABLE_NAME, null, contentValues)
+
+                if (newRowId != -1L) {
+
+                    Toast.makeText(this, "Data inserted successfully", Toast.LENGTH_SHORT).show()
+                } else {
+
+                    Toast.makeText(this, "Failed to insert data", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            cursor.close()
         }
     }}
 

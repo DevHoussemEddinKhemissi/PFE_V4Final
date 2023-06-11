@@ -40,8 +40,22 @@ class AuthentificationActivity : AppCompatActivity() {
     lateinit var editor:SharedPreferences.Editor
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_authentification)
+
+
+        val databaseName = "Tevah.db"
+        val deleted = this.deleteDatabase(databaseName)
+        if (deleted) {
+
+            Log.d("Dropped Database ", "Database dropped ")
+            //Toast.makeText(this, "Database dropped successfully", Toast.LENGTH_SHORT).show()
+        } else {
+            //Toast.makeText(this, "Failed to drop the database", Toast.LENGTH_SHORT).show()
+            Log.d("Failed to drop ", "Database dropped ")
+
+        }
         sharedPref = getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
         editor = sharedPref.edit()
         val value = sharedPref.getString("Token", null)

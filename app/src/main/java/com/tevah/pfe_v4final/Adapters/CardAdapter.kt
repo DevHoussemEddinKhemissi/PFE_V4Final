@@ -9,6 +9,7 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import com.tevah.pfe_v4final.Models.Card
 import com.tevah.pfe_v4final.R
 import com.tevah.pfe_v4final.RestaurantDetailsActivity
@@ -22,42 +23,42 @@ class CardAdapter (private val dataholder3: ArrayList<Card>) : RecyclerView.Adap
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val cardModel = dataholder3[position]
-        holder.img.setImageResource(cardModel.image)
+
+        Picasso.get().load("http://192.168.1.14:4242/images/"+cardModel.image).into(holder.img)
         holder.name.text = cardModel.name
-        holder.speciality.text = cardModel.speciality
+        holder.speciality.text = cardModel.stock.toString()
         holder.price.text = cardModel.price
         holder.quantity.setText("1")
-        holder.buttonminus.setOnClickListener{
+        holder.buttonminus.setOnClickListener {
             val text = holder.quantity.text.toString()
-            var INTtValue = text.toInt()
+            var intValue = text.toInt()
 
-            if (INTtValue < 50) {
-                INTtValue -= 1
-                if (INTtValue < 1) {
-                    INTtValue = 1
-                }
-            } else {
-                INTtValue = INTtValue
+            if (intValue > 1) {
+                intValue -= 1
             }
 
-            holder.quantity.text = INTtValue.toString()
-        }
-        holder.buttonplus.setOnClickListener{
-            val text = holder.quantity.text.toString()
-            var INTtValue = text.toInt()
 
-            if (INTtValue < 50) {
-                INTtValue += 1
-                if (INTtValue < 1) {
-                    INTtValue = 1
-                }
+            intValue = minOf(intValue, cardModel.stock)
+
+            holder.quantity.text = intValue.toString()
+        }
+
+        holder.buttonplus.setOnClickListener {
+            val text = holder.quantity.text.toString()
+            var intValue = text.toInt()
+
+            if (intValue < cardModel.stock) {
+                intValue += 1
             } else {
-                INTtValue = INTtValue
+                intValue = cardModel.stock
             }
 
-            holder.quantity.text = INTtValue.toString()
+            // Ensure intValue doesn't go below 1
+            intValue = maxOf(intValue, 1)
 
+            holder.quantity.text = intValue.toString()
         }
+
 
     }
 

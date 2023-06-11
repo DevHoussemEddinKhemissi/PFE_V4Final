@@ -12,6 +12,7 @@ import com.tevah.pfe_v4final.API.RetrofitAPIInterface
 import com.tevah.pfe_v4final.API.ServiceBuilderRetrofit
 import com.tevah.pfe_v4final.Models.UserRegisterResponce
 import com.tevah.pfe_v4final.Models.UserRetrieve
+import com.tevah.pfe_v4final.SQLDB.Database
 import retrofit2.Call
 import retrofit2.Response
 
@@ -41,6 +42,23 @@ class MainMenuActivity : AppCompatActivity() {
 
             }
         )*/
+
+        val database = Database(this)
+        val db = database.writableDatabase
+
+
+        val isDatabaseCreated = getDatabasePath("Tevah.db").exists()
+        if (isDatabaseCreated) {
+
+          //  Toast.makeText(this, "Database created successfully", Toast.LENGTH_SHORT).show()
+
+            // Perform any additional operations or queries here
+        } else {
+
+           // Toast.makeText(this, "Failed to create database", Toast.LENGTH_SHORT).show()
+
+
+        }
         window.addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN)
         val navigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
 

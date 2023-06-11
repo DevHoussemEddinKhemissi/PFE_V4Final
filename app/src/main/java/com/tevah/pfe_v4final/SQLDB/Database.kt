@@ -1,29 +1,23 @@
 package com.tevah.pfe_v4final.SQLDB
-
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.tevah.pfe_v4final.SQLDB.DatabaseContract.WishlistEntry
 
-class Database(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
-
+class Database(context: Context) : SQLiteOpenHelper(context, "Tevah.db", null, 1) {
     override fun onCreate(db: SQLiteDatabase) {
-        val createTable = "CREATE TABLE ${ProductContract.ProductEntry.TABLE_NAME} (" +
-                "${ProductContract.ProductEntry.COLUMN_ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
-                "${ProductContract.ProductEntry.COLUMN_NAME} TEXT," +
-                "${ProductContract.ProductEntry.COLUMN_IMAGE} TEXT," +
-                "${ProductContract.ProductEntry.COLUMN_PRIX} TEXT" +
+        val createTableQuery = "CREATE TABLE ${WishlistEntry.TABLE_NAME} (" +
+                "${WishlistEntry.COLUMN_ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
+                "${WishlistEntry.COLUMN_NAME} TEXT," +
+                "${WishlistEntry.COLUMN_IMAGE} TEXT," +
+                "${WishlistEntry.COLUMN_STOCK} INTEGER," +
+                "${WishlistEntry.COLUMN_VALID} INTEGER," +
+                "${WishlistEntry.COLUMN_PRIX} TEXT" +
                 ")"
-        db.execSQL(createTable)
+        db.execSQL(createTableQuery)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        db.execSQL("DROP TABLE IF EXISTS ${ProductContract.ProductEntry.TABLE_NAME}")
-        onCreate(db)
-    }
-
-    companion object {
-
-        private const val DATABASE_NAME = "Wishlist.db"
-        private const val DATABASE_VERSION = 1
+        // Handle database upgrade if needed
     }
 }

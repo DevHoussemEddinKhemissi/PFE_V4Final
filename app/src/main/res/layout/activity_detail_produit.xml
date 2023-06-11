@@ -35,8 +35,8 @@
                 android:layout_below="@id/ivDishImage"
                 android:layout_marginTop="16dp"
                 android:text="Dish Name"
-                android:textSize="24sp"
                 android:textColor="@android:color/black"
+                android:textSize="24sp"
                 android:textStyle="bold" />
 
             <!-- Dish Description -->
@@ -58,8 +58,8 @@
                 android:layout_below="@id/tvDishDescription"
                 android:layout_marginTop="8dp"
                 android:text="Price: $10.99"
-                android:textSize="16sp"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
 
             <!-- Stock Quantity -->
             <TextView
@@ -69,8 +69,8 @@
                 android:layout_below="@id/tvDishPrice"
                 android:layout_marginTop="8dp"
                 android:text="In Stock: 0"
-                android:textSize="16sp"
-                android:textColor="@android:color/black" />
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/tvRestaurantDetailsCard"
