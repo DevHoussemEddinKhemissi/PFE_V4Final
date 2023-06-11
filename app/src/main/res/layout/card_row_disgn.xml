@@ -78,7 +78,7 @@
 
             <TextView
                 android:id="@+id/textView9"
-                android:layout_width="25dp"
+                android:layout_width="40dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:padding="6dp"

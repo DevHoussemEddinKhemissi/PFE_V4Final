@@ -55,7 +55,7 @@ class ProductsFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_products, container, false)
 
         searchEditText = view.findViewById(R.id.searchEditText)
-        searchButton = view.findViewById(R.id.searchButton)
+       // searchButton = view.findViewById(R.id.searchButton)
         productGridView = view.findViewById(R.id.productGridView)
         productAdapter = ProduitGridLayoutAdapter(requireContext(), productList)
         productGridView.adapter = productAdapter
@@ -73,9 +73,9 @@ class ProductsFragment : Fragment() {
              override fun afterTextChanged(s: Editable?) {}
         })
 
-        searchButton.setOnClickListener {
+       /* searchButton.setOnClickListener {
             showDisclaimerPopup()
-        }
+        }*/
 
         showProgress()
         fetchAllProducts()

@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProductsFragment">
+    tools:context=".ProductsFragment"
+    android:background="@drawable/backred">
     <!-- activity_main.xml -->
     <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
@@ -17,20 +18,30 @@
             android:layout_height="wrap_content"
             android:padding="8dp">
 
-            <EditText
-                android:id="@+id/searchEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_gravity="top"
-                android:hint="Search products"
-                android:inputType="text" />
+        <EditText
+            android:id="@+id/searchEditText"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            android:hint="Search products"
+            android:inputType="text"
+            android:background="@drawable/searchview_backgound"
+            android:drawableStart="@drawable/ic_baseline_search_24"
+            android:drawablePadding="10dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="16dp"
+            android:drawableTint ="#FD8585"
+            android:maxLines="1"
+            android:textColorHint="#FD8585" />
 
-            <Button
+
+            <!--<Button
                 android:id="@+id/searchButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Disclaimer" />
+                android:text="Disclaimer" />  -->
+
 
         </LinearLayout>
 

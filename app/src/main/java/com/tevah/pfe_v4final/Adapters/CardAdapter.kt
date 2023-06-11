@@ -26,14 +26,37 @@ class CardAdapter (private val dataholder3: ArrayList<Card>) : RecyclerView.Adap
         holder.name.text = cardModel.name
         holder.speciality.text = cardModel.speciality
         holder.price.text = cardModel.price
+        holder.quantity.setText("1")
         holder.buttonminus.setOnClickListener{
+            val text = holder.quantity.text.toString()
+            var INTtValue = text.toInt()
 
-            holder.quantity.setText("2")
+            if (INTtValue < 50) {
+                INTtValue -= 1
+                if (INTtValue < 1) {
+                    INTtValue = 1
+                }
+            } else {
+                INTtValue = INTtValue
+            }
+
+            holder.quantity.text = INTtValue.toString()
         }
         holder.buttonplus.setOnClickListener{
+            val text = holder.quantity.text.toString()
+            var INTtValue = text.toInt()
 
-            val intent = Intent(it.context, RestaurantDetailsActivity::class.java)
-            it.context.startActivity(intent)
+            if (INTtValue < 50) {
+                INTtValue += 1
+                if (INTtValue < 1) {
+                    INTtValue = 1
+                }
+            } else {
+                INTtValue = INTtValue
+            }
+
+            holder.quantity.text = INTtValue.toString()
+
         }
 
     }

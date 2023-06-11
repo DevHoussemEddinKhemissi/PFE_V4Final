@@ -90,10 +90,11 @@ class AccountFragment : Fragment() {
         sharedPref = requireActivity().getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
         editor = sharedPref.edit().remove("Token")
         editor.apply()
-        val intent = Intent(requireContext(), AuthentificationActivity::class.java)
 
-        // Start the activity
+
+
+        val intent = Intent(requireContext(), SplashScreenActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
-        requireActivity().finish()
     }
 }

@@ -37,7 +37,7 @@
             android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/localmap"
+            android:drawableStart="@drawable/cloche"
             android:text="Time"
             android:textSize="10sp"
             app:layout_constraintBottom_toBottomOf="parent"

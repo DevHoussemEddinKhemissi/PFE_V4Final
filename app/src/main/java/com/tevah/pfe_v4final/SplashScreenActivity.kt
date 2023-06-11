@@ -43,6 +43,7 @@ class SplashScreenActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
+
         window.decorView.windowInsetsController!!.hide(
             android.view.WindowInsets.Type.statusBars()
                     or android.view.WindowInsets.Type.navigationBars()

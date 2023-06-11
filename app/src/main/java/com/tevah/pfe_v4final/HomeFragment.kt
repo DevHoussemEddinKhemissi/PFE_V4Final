@@ -23,6 +23,7 @@ import com.squareup.picasso.Transformation
 import com.tevah.pfe_v4final.API.RetrofitAPIInterface
 import com.tevah.pfe_v4final.API.ServiceBuilderRetrofit
 import com.tevah.pfe_v4final.Adapters.ProduitAdapter
+import com.tevah.pfe_v4final.Adapters.RoundedTransformation
 import com.tevah.pfe_v4final.Adapters.ShopAdapter
 import com.tevah.pfe_v4final.Models.*
 import retrofit2.Call
@@ -83,7 +84,7 @@ class HomeFragment : Fragment() {
                     Picasso
                         .get()
                         .load(response.body()?.user?.image)
-                        .transform(RoundedTransformation(50F))
+                        .transform(RoundedTransformation())
                         .into(profileImage);
                 }
 
@@ -181,35 +182,3 @@ class HomeFragment : Fragment() {
     }
 }
 
-class RoundedTransformation(private val radius: Float) : Transformation {
-
-    override fun transform(source: Bitmap): Bitmap {
-        val width = source.width
-        val height = source.height
-
-        val output = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
-
-        val paint = Paint().apply {
-            isAntiAlias = true
-            shader = BitmapShader(source, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
-        }
-
-        val canvas = Canvas(output)
-        canvas.drawRoundRect(
-            RectF(0F, 0F, width.toFloat(), height.toFloat()),
-            radius,
-            radius,
-            paint
-        )
-
-        if (source != output) {
-            source.recycle()
-        }
-
-        return output
-    }
-
-    override fun key(): String {
-        return "rounded(radius=$radius)"
-    }
-}
