@@ -11,7 +11,7 @@ android {
     defaultConfig {
         applicationId "com.tevah.pfe_v4final"
         minSdk 30
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -57,5 +57,9 @@ dependencies {
     implementation 'com.github.denzcoskun:ImageSlideshow:0.1.2'
     //Picasso
     implementation 'com.squareup.picasso:picasso:2.8'
+    // Stripe Android SDK
+    implementation 'com.stripe:stripe-android:20.25.5'
+    //Lottie
+    implementation "com.airbnb.android:lottie:3.4.0"
 
 }

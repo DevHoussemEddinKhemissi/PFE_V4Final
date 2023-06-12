@@ -3,6 +3,7 @@ package com.tevah.pfe_v4final.API
 
 import com.tevah.pfe_v4final.Models.*
 import retrofit2.Call
+import retrofit2.Retrofit
 import retrofit2.http.*
 
 interface RetrofitAPIInterface {
@@ -30,5 +31,9 @@ interface RetrofitAPIInterface {
 
     @POST("/api/test/FindOneproduct")
     fun getData(@Body productDetailGet: ProductDetailGet): Call<ProduitDetailsPageResponce>
+
+    @POST("/api/sales/createorder")
+    fun createPayment(@Body order: OrdreSet): Call<OrderResponce>
+
 
 }

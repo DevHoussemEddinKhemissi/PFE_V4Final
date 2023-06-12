@@ -9,6 +9,8 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
+import com.tevah.pfe_v4final.API.PathImages
 import com.tevah.pfe_v4final.Models.Shop
 import com.tevah.pfe_v4final.R
 import com.tevah.pfe_v4final.RestaurantDetailsActivity
@@ -24,6 +26,15 @@ class ShopAdapter(private val shopModels: List<Shop>) : RecyclerView.Adapter<Sho
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val shopModel = shopModels[position]
         //holder.img.setImageResource(shopModel.image)
+        val myPath = PathImages.STATIC_PATH
+        // Set the product data to the views
+
+        Picasso
+            .get()
+            .load(myPath+shopModel.image)
+            .transform( RoundedCornersTransformation(16, 0))
+            .fit()
+            .into(holder.img)
         holder.name.text = shopModel.name
         holder.adresse.text = shopModel.adress
         holder.button.setOnClickListener {

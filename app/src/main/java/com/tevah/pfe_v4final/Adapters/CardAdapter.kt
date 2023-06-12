@@ -1,30 +1,36 @@
 package com.tevah.pfe_v4final.Adapters
 
-import android.content.Intent
+
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
+import com.tevah.pfe_v4final.API.PathImages
 import com.tevah.pfe_v4final.Models.Card
 import com.tevah.pfe_v4final.R
-import com.tevah.pfe_v4final.RestaurantDetailsActivity
+
 
 class CardAdapter (private val dataholder3: ArrayList<Card>) : RecyclerView.Adapter<CardAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.card_row_disgn, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.testrow2, parent, false)
         return MyViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val cardModel = dataholder3[position]
-
-        Picasso.get().load("http://192.168.1.14:4242/images/"+cardModel.image).into(holder.img)
+        val myPath = PathImages.STATIC_PATH
+        Log.d("testproduit", "onBindViewHolder: "+cardModel.image)
+        Picasso
+            .get()
+            .load(myPath+cardModel.image)
+            .transform( RoundedCornersTransformation(16, 0))
+            .fit()
+            .into(holder.img)
         holder.name.text = cardModel.name
         holder.speciality.text = cardModel.stock.toString()
         holder.price.text = cardModel.price

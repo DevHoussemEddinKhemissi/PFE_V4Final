@@ -48,15 +48,15 @@ class SplashScreenActivity : AppCompatActivity() {
             android.view.WindowInsets.Type.statusBars()
                     or android.view.WindowInsets.Type.navigationBars()
         )
-        val progressBar = findViewById<ProgressBar>(R.id.progressBarSplash)
-        progressBar.max = 100
-        progressBar.progress = 0
+
 
         getLocationsDistance() //wait
 
         Handler(Looper.getMainLooper()).postDelayed({
-            updateProgress(Progressed.Api)
-        }, 2000)
+            val intent = Intent(this, AuthentificationActivity::class.java)
+            startActivity(intent)
+            finish()
+        }, 4000)
     }
 
     @SuppressLint("MissingPermission")
@@ -77,7 +77,7 @@ class SplashScreenActivity : AppCompatActivity() {
             return
         }
 
-        updateProgress(Progressed.DistanceInit)
+
         fusedLocationClient.lastLocation
             .addOnSuccessListener { location: Location? ->
                 if (location != null) {
@@ -105,7 +105,7 @@ class SplashScreenActivity : AppCompatActivity() {
                             Log.d("duration","Distance from $origin to ${locations[jndex]} is ${distance.inMeters} meters and takes ${duration.inSeconds} seconds.")
                         }
                     }
-                    updateProgress(Progressed.DistanceFinish)
+
                 }else {
                     Log.d("Duration", "Location is null")
                 }
@@ -114,24 +114,5 @@ class SplashScreenActivity : AppCompatActivity() {
 
     }
 
-    fun updateProgress(element: Progressed){
-        val progressBar = findViewById<ProgressBar>(R.id.progressBarSplash)
-        stepsToInit.add(element)
-        when(element) {
-            Progressed.Api -> {
-                ObjectAnimator.ofInt(progressBar, "progress", progressBar.progress + 60).setDuration(100).start()
-            }
-            Progressed.DistanceInit -> {
-                ObjectAnimator.ofInt(progressBar, "progress", progressBar.progress + 10).setDuration(100).start()
-            }
-            Progressed.DistanceFinish -> {
-                ObjectAnimator.ofInt(progressBar, "progress", progressBar.progress + 30).setDuration(100).start()
-            }
-        }
-        if (stepsToInit.size == 3){
-            val intent = Intent(this, AuthentificationActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-    }
+
 }

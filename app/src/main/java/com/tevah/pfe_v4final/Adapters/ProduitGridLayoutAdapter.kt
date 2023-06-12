@@ -2,12 +2,15 @@ package com.tevah.pfe_v4final.Adapters
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.squareup.picasso.Picasso
+import com.tevah.pfe_v4final.API.PathImages
 import com.tevah.pfe_v4final.DetailProduit
 import com.tevah.pfe_v4final.Models.Produit
 import com.tevah.pfe_v4final.R
@@ -32,8 +35,10 @@ class ProduitGridLayoutAdapter (private val context: Context, var productList: L
         val holder: ViewHolder
 
         if (convertView == null) {
+            Log.d("getit", "getView: ")
             view = LayoutInflater.from(context).inflate(R.layout.product_item, parent, false)
             holder = ViewHolder()
+
             holder.productImage = view.findViewById(R.id.productImage)
             holder.productTitle = view.findViewById(R.id.productTitle)
             holder.productPrice = view.findViewById(R.id.productPrice)
@@ -45,13 +50,19 @@ class ProduitGridLayoutAdapter (private val context: Context, var productList: L
         }
 
         val product = productList[position]
-
+        val myPath = PathImages.STATIC_PATH
         // Set the product data to the views
-        holder.productImage.setImageResource(R.drawable.exempleplat)
+        Picasso
+            .get()
+            .load(myPath+product.image)
+            .transform( RoundedCornersTransformation(16, 0))
+            .fit()
+            .into(holder.productImage)
+
         holder.productTitle.text = product.name
         holder.productPrice.text = product.prix
         holder.viewproduit.setOnClickListener{
-            val produitid = product.id
+
             val intent = Intent(it.context, DetailProduit::class.java)
 
             intent.putExtra("key", product.name)
@@ -68,6 +79,7 @@ class ProduitGridLayoutAdapter (private val context: Context, var productList: L
     }
 
     private class ViewHolder {
+
         lateinit var productImage: ImageView
         lateinit var productTitle: TextView
         lateinit var productPrice: TextView

@@ -6,156 +6,148 @@
     android:layout_height="match_parent"
     tools:context=".DetailProduit">
 
-    <ScrollView
+
+
+    <ImageView
+        android:id="@+id/ivDishImage"
+        android:layout_width="325dp"
+        android:layout_height="325dp"
+        android:layout_marginTop="24dp"
+        android:layout_weight="1"
+        android:adjustViewBounds="true"
+
+        android:scaleType="centerCrop"
+        android:src="@drawable/exempleplat"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        android:background="@drawable/imagebackgroundshop"
+        />
+
+    <TextView
+        android:id="@+id/tvDishName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ivDishImage"
+        android:layout_marginTop="16dp"
+        android:text="Dish Name"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/ivDishImage"
+        app:layout_constraintTop_toBottomOf="@+id/ivDishImage" />
+
+
+    <TextView
+        android:id="@+id/tvDishPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDishDescription"
+        android:layout_marginTop="16dp"
+        android:text="Price: $10.99"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="@+id/ivDishImage"
+        app:layout_constraintTop_toBottomOf="@+id/ivDishImage" />
+
+    <TextView
+        android:id="@+id/tvStockQuantity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDishPrice"
+        android:text="In Stock: 0"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/tvDishPrice"
+        app:layout_constraintTop_toBottomOf="@+id/tvDishPrice" />
+
+    <TextView
+        android:id="@+id/tvDishDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvDishName"
+        android:layout_marginTop="32dp"
+        android:text="Dish Description"
+        android:textColor="@android:color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="@+id/tvDishName"
+        app:layout_constraintTop_toBottomOf="@+id/tvDishName" />
+
+
+    <!-- Restaurant Distance -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:gravity="top"
+        android:orientation="horizontal"
+        android:padding="5dp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="0dp">
 
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="20dp"
-            >
+        <!-- Restaurant Image -->
 
-            <!-- Dish Image -->
-            <ImageView
-                android:id="@+id/ivDishImage"
-                android:background="@drawable/detail_produit_image_shape"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/exempleplat" />
+        <!-- Restaurant Name -->
+        <ImageView
+            android:id="@+id/ivRestaurantImage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/pizzaria"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
 
-            <!-- Dish Name -->
-            <TextView
-                android:id="@+id/tvDishName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/ivDishImage"
-                android:layout_marginTop="16dp"
-                android:text="Dish Name"
-                android:textColor="@android:color/black"
-                android:textSize="24sp"
-                android:textStyle="bold" />
+            android:background="@drawable/imagebackgroundshop"/>
 
-            <!-- Dish Description -->
-            <TextView
-                android:id="@+id/tvDishDescription"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvDishName"
-                android:layout_marginTop="8dp"
-                android:text="Dish Description"
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
+        <TextView
+            android:id="@+id/tvRestaurantName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Restaurant Name"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <!-- Dish Price -->
-            <TextView
-                android:id="@+id/tvDishPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvDishDescription"
-                android:layout_marginTop="8dp"
-                android:text="Price: $10.99"
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
+        <TextView
+            android:id="@+id/tvRestaurantDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Distance"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tvRestaurantName"
+            app:layout_constraintHorizontal_bias="0.467"
+            app:layout_constraintStart_toStartOf="@+id/tvRestaurantName"
+            app:layout_constraintTop_toBottomOf="@+id/tvRestaurantName" />
 
-            <!-- Stock Quantity -->
-            <TextView
-                android:id="@+id/tvStockQuantity"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvDishPrice"
-                android:layout_marginTop="8dp"
-                android:text="In Stock: 0"
-                android:textColor="@android:color/black"
-                android:textSize="16sp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/tvRestaurantDetailsCard"
-                android:layout_below="@id/tvStockQuantity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="4dp"
-                android:background="@drawable/produit_detail_restaurant_card_shape"
-                >
-                <!-- Restaurant Name -->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="top"
-                    android:orientation="horizontal"
-                    android:padding="5dp">
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/AjouterWishlist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
-                    <!-- Restaurant Image -->
-                    <ImageView
-                        android:id="@+id/ivRestaurantImage"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/pizzaria" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/buttons_corners"
 
-                    <!-- Restaurant Name -->
-                    <TextView
-                        android:id="@+id/tvRestaurantName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:layout_marginStart="16dp"
-                        android:text="Restaurant Name"
-                        android:textColor="@android:color/black"
-                        android:textSize="18sp" />
+        android:text="Ajouter au panier"
+        android:textColor="@color/white"
+        app:backgroundTint="@null"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/tvStockQuantity"
+        app:layout_constraintStart_toStartOf="@+id/tvDishDescription" />
 
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-
-            <!-- Restaurant Distance -->
-            <TextView
-                android:id="@+id/tvRestaurantDistance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvRestaurantDetailsCard"
-                android:layout_marginTop="8dp"
-                android:text="Distance: 2.5 miles"
-                android:textSize="16sp"
-                android:textColor="@android:color/black" />
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/BuyCard"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/tvRestaurantDistance"
-                android:layout_marginTop="8dp"
-                android:layout_marginBottom="8dp"
-                android:background="@drawable/disclaimer_button_background_shape"
-                app:cardCornerRadius="8dp"
-                app:cardElevation="6dp">
-
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/AjouterWishlist"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/password"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:background="@drawable/buttons_corners"
-                    android:text="Ajouter au panier"
-
-                    android:textColor="@color/white"
-                    app:backgroundTint="@null" />
-
-            </androidx.cardview.widget.CardView>
-
-
-        </RelativeLayout>
-    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

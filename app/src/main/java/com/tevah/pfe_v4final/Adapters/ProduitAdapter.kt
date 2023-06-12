@@ -1,5 +1,6 @@
 package com.tevah.pfe_v4final.Adapters
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
+import com.tevah.pfe_v4final.API.PathImages
 import com.tevah.pfe_v4final.Models.Produit
 import com.tevah.pfe_v4final.R
 
@@ -33,12 +35,19 @@ class ProduitAdapter (private val produit: List<Produit>) :
         private val time: TextView = itemView.findViewById(R.id.time)
 
         fun bind(model: Produit) {
-            // Set the product data to the views
+
+            val myPath = PathImages.STATIC_PATH
             val imagePath = model.getProductImageUrl()
+            Log.d("tata", "bind: "+imagePath)
+
             Picasso
                 .get()
-                .load(imagePath)
-                .into(img);
+                .load(myPath+imagePath)
+                .transform( RoundedCornersTransformation(16, 0))
+                .fit()
+                .into(img)
+
+
             distance.text = model.name
             time.text = model.shop.name
 

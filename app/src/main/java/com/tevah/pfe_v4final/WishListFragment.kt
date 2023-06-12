@@ -1,18 +1,30 @@
 package com.tevah.pfe_v4final
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.stripe.android.ApiResultCallback
+import com.stripe.android.Stripe
+import com.stripe.android.model.PaymentMethodCreateParams
+import com.stripe.android.paymentsheet.PaymentSheet
+import com.stripe.android.paymentsheet.PaymentSheetResult
+import com.stripe.android.view.CardInputWidget
+import com.tevah.pfe_v4final.API.RetrofitAPIInterface
+import com.tevah.pfe_v4final.API.ServiceBuilderRetrofit
 import com.tevah.pfe_v4final.Adapters.CardAdapter
-import com.tevah.pfe_v4final.Models.Card
-import com.tevah.pfe_v4final.Models.WishlistItem
+import com.tevah.pfe_v4final.Models.*
 import com.tevah.pfe_v4final.SQLDB.Database
 import com.tevah.pfe_v4final.SQLDB.DatabaseContract
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -29,6 +41,8 @@ class WishListFragment : Fragment() {
     private lateinit var database: Database
     private lateinit var recyclerViewCardList: RecyclerView
     private lateinit var dataholder3: ArrayList<Card>
+
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -46,6 +60,7 @@ class WishListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_wish_list, container, false)
+        //val stripe = Stripe(requireContext(), "YOUR_PUBLISHABLE_KEY to complete")
 
         database = Database(requireContext())
 
@@ -82,7 +97,12 @@ class WishListFragment : Fragment() {
         }
 
         recyclerViewCardList.adapter = CardAdapter(dataholder3)
+        val button = view.findViewById<Button>(R.id.button7)
+        button.setOnClickListener {
+            var intenti = Intent(context, PaymentStripeActivity()::class.java)
+            startActivity(intenti)
 
+        }
         return view
     }
 
@@ -143,6 +163,8 @@ class WishListFragment : Fragment() {
 
         cursor.close()
 
+
         return wishlistData
     }
+
 }

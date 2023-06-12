@@ -32,7 +32,7 @@ class DetailProduit : AppCompatActivity() {
         val retrofit = ServiceBuilderRetrofit.buildService(RetrofitAPIInterface::class.java)
         var stock: Product? = null
         val nametext = intent.getStringExtra("key")
-        val name = "marhouga" // Set the desired name her
+
         val obj = ProductDetailGet(
             name = nametext.toString(),
 
@@ -45,7 +45,8 @@ class DetailProduit : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val responceBody: ProduitDetailsPageResponce? = response.body()
                     if (responceBody != null) {
-                        val product: Product? = responceBody.product?.get(0) // Assuming there is only one product in the list
+                        val product: Product? =
+                            responceBody.product.get(0) // Assuming there is only one product in the list
                         if (product != null) {
                             stock = product
                             // Use the stock value as needed

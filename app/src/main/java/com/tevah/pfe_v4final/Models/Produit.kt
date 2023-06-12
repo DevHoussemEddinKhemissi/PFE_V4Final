@@ -19,7 +19,7 @@ data class Produit(
 ){
     fun getProductImageUrl(): String{
         image?.let {
-            return "http://192.168.1.14:4242/images/$it"
+            return "$it"
         }?: run {
             return "http://192.168.1.14:4242/images/1686417255978.png" //placeholder
 

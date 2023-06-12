@@ -79,8 +79,8 @@ class AccountFragment : Fragment() {
         LoginManager.getInstance().logOut()
         //google
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestEmail().build()
-        val gsc = GoogleSignIn.getClient(requireContext(), gso!!)
-            gsc!!.signOut().addOnCompleteListener {}
+        val gsc = GoogleSignIn.getClient(requireContext(), gso)
+            gsc.signOut().addOnCompleteListener {}
         finishLogout()
     }
 

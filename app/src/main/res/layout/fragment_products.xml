@@ -4,14 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ProductsFragment"
-    android:background="@drawable/backred">
+    android:background="@drawable/backred"
+    >
     <!-- activity_main.xml -->
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <!-- Search Bar -->
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
@@ -47,7 +48,7 @@
 
         </LinearLayout>
 
-        <!-- Grid Layout -->
+
         <GridView
             android:id="@+id/productGridView"
             android:layout_width="match_parent"
