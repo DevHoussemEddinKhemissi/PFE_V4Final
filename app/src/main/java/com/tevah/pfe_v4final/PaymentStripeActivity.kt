@@ -30,8 +30,18 @@ class PaymentStripeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
 
+        val receivedString1 = intent.getStringExtra("customerConfig")
+        val receivedString2 = intent.getStringExtra("paymentIntentClientSecret")
+        val receivedString3 = intent.getStringExtra("publishableKey")
 
+        customerConfig = PaymentSheet.CustomerConfiguration(
+            "billing name Robert jackson", receivedString1.toString()
+        )
+        paymentIntentClientSecret = receivedString2.toString()
 
+        val publishableKey = receivedString3.toString()
+
+        PaymentConfiguration.init(context = this, publishableKey)
         paymentSheet = PaymentSheet(this, ::onPaymentSheetResult)
         setContentView(R.layout.activity_payment_stripe)
 
@@ -41,46 +51,7 @@ class PaymentStripeActivity : AppCompatActivity() {
                 PaymentSheet.Configuration("Code Eseay"))
         }
 
-        val button = findViewById<Button>(R.id.button5)
 
-        sharedPref = getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
-
-        button.setOnClickListener {
-            val products = listOf(ProductIDQuantity(5,1),ProductIDQuantity(6,1))
-            val order = OrdreSet("10.000", products = products)// Create a new instance of the Project object with the required data
-
-            val retrofit = ServiceBuilderRetrofit.buildService(RetrofitAPIInterface::class.java)
-
-            val userToken = sharedPref.getString("Token","")
-            val call = retrofit.createPayment(userToken!!,order)
-            call.enqueue(object : Callback<OrderResponce> {
-                override fun onResponse(call: Call<OrderResponce>, response: Response<OrderResponce>) {
-                    if (response.isSuccessful) {
-
-                        Log.d("stripePublishableKey", "onResponse: "+ response.body()?.stripePublishableKey.toString())
-                        Log.d("paymentIntentClientSecret", "onResponse: "+ response.body()?.paymentIntentClientSecret.toString())
-                        customerConfig = PaymentSheet.CustomerConfiguration(
-                            "billing name Robert jackson",
-                            response.body()?.stripePublishableKey.toString()
-                        )
-                        paymentIntentClientSecret = response.body()?.paymentIntentClientSecret.toString()
-
-                        val publishableKey = response.body()?.stripePublishableKey.toString()
-                        PaymentConfiguration.init(context = this@PaymentStripeActivity, publishableKey)
-
-
-                    } else {
-                        Log.d("SERVER Problem", "onResponse: no")
-                    }
-                }
-
-                override fun onFailure(call: Call<OrderResponce>, t: Throwable) {
-                    Toast.makeText(baseContext,"Insufussient stock quantity",Toast.LENGTH_LONG)
-                }
-            })
-
-
-        }
 
 
     }

@@ -37,7 +37,8 @@ class SplashScreenActivity : AppCompatActivity() {
         LatLng(36.8991569,10.1818463),
         LatLng(36.89147,10.1687499),
         LatLng(36.8878833,10.164503),
-        LatLng(36.8900354,10.1777686)
+        LatLng(36.8900354,10.1777686),
+        LatLng(36.805729,10.109200)
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {

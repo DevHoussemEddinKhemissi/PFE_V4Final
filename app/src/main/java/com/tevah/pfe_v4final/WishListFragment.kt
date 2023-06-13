@@ -1,6 +1,8 @@
 package com.tevah.pfe_v4final
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -8,9 +10,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.stripe.android.ApiResultCallback
+import com.stripe.android.PaymentConfiguration
 import com.stripe.android.Stripe
 import com.stripe.android.model.PaymentMethodCreateParams
 import com.stripe.android.paymentsheet.PaymentSheet
@@ -38,11 +42,13 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class WishListFragment : Fragment() {
+    lateinit var sharedPref: SharedPreferences
     private lateinit var database: Database
     private lateinit var recyclerViewCardList: RecyclerView
     private lateinit var dataholder3: ArrayList<Card>
-
-
+    lateinit var customerConfig: PaymentSheet.CustomerConfiguration
+    private var paymentIntentClientSecret: String? = null
+    var totalPrice: Double = 0.0
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -70,13 +76,16 @@ class WishListFragment : Fragment() {
 
         val wishlistData = getAllWishlistData()
         if (wishlistData.isNotEmpty()) {
-            // Wishlist table is not empty, populate the ArrayList
+
             wishlistDataList.addAll(wishlistData)
 
-            // Access the wishlistDataList to retrieve the retrieved data
+
             for (item in wishlistDataList) {
-                // Do something with each WishlistItem in the list
+
                 Log.d("WishlistItem", item.toString())
+
+
+
             }
         } else {
             // Wishlist table is empty, handle the scenario accordingly
@@ -91,16 +100,69 @@ class WishListFragment : Fragment() {
 
         dataholder3 = ArrayList()
 
-        for (wishlistItem in wishlistDataList) {
-           val card = Card(wishlistItem.image, wishlistItem.name, wishlistItem.stock, wishlistItem.price)
-            dataholder3.add(card)
+
+        if (wishlistData.isNotEmpty()) {
+            wishlistDataList.addAll(wishlistData)
+
+            for (item in wishlistDataList) {
+                val card = Card(item.image, item.name, item.stock, item.price)
+                dataholder3.add(card)
+
+
+
+            }
+        } else {
+            Toast.makeText(requireContext(), "Wishlist is empty", Toast.LENGTH_SHORT).show()
         }
 
         recyclerViewCardList.adapter = CardAdapter(dataholder3)
         val button = view.findViewById<Button>(R.id.button7)
         button.setOnClickListener {
-            var intenti = Intent(context, PaymentStripeActivity()::class.java)
-            startActivity(intenti)
+
+
+            sharedPref = requireContext().getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
+
+
+                val products = listOf(ProductIDQuantity(5,1),ProductIDQuantity(6,1))
+                val order = OrdreSet("10.000", products = products)// Create a new instance of the Project object with the required data
+
+                val retrofit = ServiceBuilderRetrofit.buildService(RetrofitAPIInterface::class.java)
+
+                val userToken = sharedPref.getString("Token","")
+                val call = retrofit.createPayment(userToken!!,order)
+                call.enqueue(object : Callback<OrderResponce> {
+                    override fun onResponse(call: Call<OrderResponce>, response: Response<OrderResponce>) {
+                        if (response.isSuccessful) {
+
+                            Log.d("stripePublishableKey", "onResponse: "+ response.body()?.stripePublishableKey.toString())
+                            Log.d("paymentIntentClientSecret", "onResponse: "+ response.body()?.paymentIntentClientSecret.toString())
+
+                            val string1 = response.body()?.stripePublishableKey.toString()
+                            val string2 = response.body()?.paymentIntentClientSecret.toString()
+                            val string3 = response.body()?.stripePublishableKey.toString()
+
+                            val intenti = Intent(requireContext(), PaymentStripeActivity::class.java).apply {
+                                putExtra("customerConfig", string1)
+                                putExtra("paymentIntentClientSecret", string2)
+                                putExtra("publishableKey", string3)
+                            }
+                            startActivity(intenti)
+
+
+                        } else {
+                            Log.d("SERVER Problem", "onResponse: no")
+                        }
+                    }
+
+                    override fun onFailure(call: Call<OrderResponce>, t: Throwable) {
+                        Toast.makeText(requireContext(),"Insufussient stock quantity", Toast.LENGTH_LONG)
+                    }
+                })
+
+
+
+
+
 
         }
         return view
@@ -148,7 +210,7 @@ class WishListFragment : Fragment() {
             null,
             null
         )
-
+        totalPrice = 0.0
         while (cursor.moveToNext()) {
             val itemId = cursor.getLong(cursor.getColumnIndexOrThrow(DatabaseContract.WishlistEntry.COLUMN_ID))
             val itemName = cursor.getString(cursor.getColumnIndexOrThrow(DatabaseContract.WishlistEntry.COLUMN_NAME))
@@ -159,11 +221,14 @@ class WishListFragment : Fragment() {
 
             val wishlistItem = WishlistItem(itemId, itemName, itemImage, itemStock, itemValid, itemPrice)
             wishlistData.add(wishlistItem)
+
+            totalPrice += itemPrice.toDoubleOrNull() ?: 0.0
+
         }
 
         cursor.close()
 
-
+        Log.d("WishlistItem", totalPrice.toString())
         return wishlistData
     }
 
