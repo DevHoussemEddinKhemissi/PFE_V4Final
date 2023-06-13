@@ -38,5 +38,8 @@ interface RetrofitAPIInterface {
     @POST("/api/test/FindOneproductWithFK")
     fun tallDataGrip(@Body finAllDataOnProduct: FinAllDataOnProduct): Call<AllDataOnProduct>
 
+    @PUT("/api/user")
+    fun updateUser(@Header("x-access-token") token: String, @Body userBody: UpdateUserRequest): Call<UserUpdateResponse>
+
 
 }

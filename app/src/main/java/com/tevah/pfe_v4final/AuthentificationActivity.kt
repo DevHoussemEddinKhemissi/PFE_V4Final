@@ -51,8 +51,9 @@ class AuthentificationActivity : AppCompatActivity() {
         val value = sharedPref.getString("Token", null)
         if (value != null) {
             intent = Intent(applicationContext, MainMenuActivity()::class.java)
-            startActivity(intent)
             finish()
+            startActivity(intent)
+
         }
         val retrofit = ServiceBuilderRetrofit.buildService(RetrofitAPIInterface::class.java)
         val edittextemail = findViewById<EditText>(R.id.email)
@@ -107,7 +108,8 @@ class AuthentificationActivity : AppCompatActivity() {
                             editor.apply()
                             Log.d("User Found", bat)
                             intent = Intent(applicationContext, MainMenuActivity()::class.java)
-                                startActivity(intent)
+                            finish()
+                            startActivity(intent)
 
                         }
                         else if (response.body()?.message.toString()=="User Not Found.") {
@@ -241,6 +243,7 @@ class AuthentificationActivity : AppCompatActivity() {
                         editor.apply()
                         Log.d("User Found", bat)
                         intent = Intent(applicationContext, MainMenuActivity()::class.java)
+                        finish()
                         startActivity(intent)
 
                     }
@@ -282,6 +285,7 @@ class AuthentificationActivity : AppCompatActivity() {
                         editor.apply()
                         Log.d("User Found", bat)
                         intent = Intent(applicationContext, MainMenuActivity()::class.java)
+                        finish()
                         startActivity(intent)
 
                     }

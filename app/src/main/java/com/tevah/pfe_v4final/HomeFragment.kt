@@ -29,6 +29,9 @@ import com.tevah.pfe_v4final.Models.*
 import retrofit2.Call
 import retrofit2.Response
 
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
@@ -45,11 +48,26 @@ class HomeFragment : Fragment() {
     private lateinit var recyclerViewCategoryList: RecyclerView
     private lateinit var recyclerViewShopList: RecyclerView
     private lateinit var dataholder1: ArrayList<Produit>
+    private lateinit var dataholder3: ArrayList<ShopWithDistance>
     private lateinit var dataholder2: ArrayList<Shop>
     private lateinit var imageSlider: ImageSlider
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private fun getValueFromSharedPreferences(): String? {
+        // Retrieve the value using the key
+        return sharedPreferences.getString("key", null)
+    }
+    private fun getValuesFromSharedPreferences(key: String): String? {
+        // Retrieve the value using the provided key
+        val sharedPreferences = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+        return sharedPreferences.getString(key, null)
+    }
+  /*  private fun getValueFromSharedPreferences(): String? {
+
+        return sharedPreferences.getString("sortedShops", null)
+    }*/
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,34 +76,42 @@ class HomeFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
-    private fun getValueFromSharedPreferences(): String? {
-        // Retrieve the value using the key
-        return sharedPreferences.getString("key", null)
-    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
+        val gson = Gson()
         sharedPreferences = requireActivity().getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
+        val sortedShopsJson = getValuesFromSharedPreferences("sortedShops")
+        val personListType = object : TypeToken<ArrayList<ShopWithDistance>>() {}.type
+         dataholder3= gson.fromJson(sortedShopsJson, personListType)
+        Log.d("dataholder 3", "onCreateView: "+dataholder3)
         val value = sharedPreferences.getString("Token", "")
         Log.d("RetriveLogin", value.toString())
         val retrofit = ServiceBuilderRetrofit.buildService(RetrofitAPIInterface::class.java)
+
+        var profileImage = view.findViewById<ImageView>(R.id.profileImageViewHome)
+        var textview = view.findViewById<TextView>(R.id.textView)
         retrofit.GetUSER(value.toString()).enqueue(
             object : retrofit2.Callback<UserRetrieve>{
                 override fun onResponse(
                     call: Call<UserRetrieve>,
                     response: Response<UserRetrieve>
                 ) {
-                    var textview = view.findViewById<TextView>(R.id.textView)
-                    textview.setText("Bonjour "+response.body()?.user?.name.toString())
+                    val user = response.body()?.user?.let {
+                        val userjson = Gson().toJson(it)
+                        val editor = sharedPreferences.edit()
+                        editor.putString("user", userjson)
+                        editor.apply()
+                        textview.setText("Bonjour "+ it.name)
+                        Picasso.get()
+                            .load(it.getImagePath()) // Replace "image_name" with the name of your image file in the drawable folder
+                            .transform(RoundedTransformation())
+                            .into(profileImage)
+                    }
                     Log.d("RetriveLogin", response.body().toString())
-                    val profileImage = view.findViewById<ImageView>(R.id.profileImageViewHome)
-                    Picasso
-                        .get()
-                        .load(response.body()?.user?.image)
-                        .transform(RoundedTransformation())
-                        .into(profileImage);
                 }
 
                 override fun onFailure(call: Call<UserRetrieve>, t: Throwable) {
@@ -96,6 +122,10 @@ class HomeFragment : Fragment() {
             }
         )
 
+
+
+
+
         recyclerViewCategoryList = view.findViewById(R.id.recyclerView3)
         recyclerViewCategoryList.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
         dataholder1 = ArrayList()
@@ -105,7 +135,7 @@ class HomeFragment : Fragment() {
         recyclerViewShopList = view.findViewById(R.id.recyclerView1)
         recyclerViewShopList.layoutManager = LinearLayoutManager(context)
         dataholder2 = ArrayList()
-        recyclerViewShopList.adapter = ShopAdapter(dataholder2)
+        recyclerViewShopList.adapter = ShopAdapter(dataholder3)
 
         imageSlider = view.findViewById(R.id.image_slider)
         val imagelist = ArrayList<SlideModel>()
@@ -113,6 +143,7 @@ class HomeFragment : Fragment() {
         imagelist.add(SlideModel(imagePath = R.drawable.testpub1, scaleType = null))
         imageSlider.setImageList(imagelist)
         fetchAllProducts()
+
         fetchAllShops()
         return view
     }
@@ -139,6 +170,7 @@ class HomeFragment : Fragment() {
                     response: Response<FetchAllProductResponse>
                 ) {
                     response.body()?.let {
+
                         dataholder1.clear(); // Assuming myDataList is the existing data source
                         dataholder1.addAll(it.product);
                         recyclerViewCategoryList.adapter?.notifyDataSetChanged()
@@ -154,6 +186,7 @@ class HomeFragment : Fragment() {
             }
         )
     }
+
 
     private fun fetchAllShops(){
         val retrofit = ServiceBuilderRetrofit.buildService(RetrofitAPIInterface::class.java)

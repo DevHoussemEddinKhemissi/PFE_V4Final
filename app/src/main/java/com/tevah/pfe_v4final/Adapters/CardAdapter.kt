@@ -68,10 +68,17 @@ class CardAdapter(private val dataholder3: ArrayList<Card>) :
             // Update the quantity value in the Card object
             cardModel.quantity = intValue
         }
+        holder.deletebutton.setOnClickListener {
+            val position = holder.adapterPosition
+            removeItem(position)
+        }
     }
 
 
-
+    fun removeItem(position: Int) {
+        dataholder3.removeAt(position)
+        notifyItemRemoved(position)
+    }
 
 
     override fun getItemCount(): Int {
@@ -86,6 +93,7 @@ class CardAdapter(private val dataholder3: ArrayList<Card>) :
         val buttonplus: TextView = itemView.findViewById(R.id.button4)
         val buttonminus: TextView = itemView.findViewById(R.id.button2)
         val quantity:TextView = itemView.findViewById(R.id.textView9)
+        val deletebutton:TextView = itemView.findViewById(R.id.deleteButton)
 
     }
 }

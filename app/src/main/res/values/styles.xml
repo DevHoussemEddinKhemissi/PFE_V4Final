@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="RedEditText" parent="Widget.AppCompat.EditText">
+        <item name="android:textColor">#FF0000</item>
+        <item name="android:background">@drawable/edittext_line</item>
+    </style>
+
+</resources>

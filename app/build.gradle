@@ -61,5 +61,6 @@ dependencies {
     implementation 'com.stripe:stripe-android:20.25.5'
     //Lottie
     implementation "com.airbnb.android:lottie:3.4.0"
+    implementation 'androidx.preference:preference-ktx:1.1.1'
 
 }

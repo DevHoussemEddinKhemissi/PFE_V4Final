@@ -12,10 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.tevah.pfe_v4final.API.PathImages
 import com.tevah.pfe_v4final.Models.Shop
+import com.tevah.pfe_v4final.Models.ShopWithDistance
 import com.tevah.pfe_v4final.R
 import com.tevah.pfe_v4final.RestaurantDetailsActivity
 
-class ShopAdapter(private val shopModels: List<Shop>) : RecyclerView.Adapter<ShopAdapter.MyViewHolder>() {
+class ShopAdapter(private val shopModels: List<ShopWithDistance>) : RecyclerView.Adapter<ShopAdapter.MyViewHolder>() {
     private val TAG = "TasksSample"
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
@@ -25,20 +26,20 @@ class ShopAdapter(private val shopModels: List<Shop>) : RecyclerView.Adapter<Sho
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
         val shopModel = shopModels[position]
+
         //holder.img.setImageResource(shopModel.image)
-        val myPath = PathImages.STATIC_PATH
         // Set the product data to the views
 
         Picasso
             .get()
-            .load(myPath+shopModel.image)
+            .load(shopModel.shop.getImagePath())
             .transform( RoundedCornersTransformation(16, 0))
             .fit()
             .into(holder.img)
-        holder.name.text = shopModel.name
-        holder.adresse.text = shopModel.adress
+        holder.name.text = shopModel.shop.name
+        holder.adresse.text = ""+(shopModel.distance/1000).toString()+" km"
         holder.button.setOnClickListener {
-            Log.i(TAG, "onClick: " + shopModel.name)
+            Log.i(TAG, "onClick: " + shopModel.shop.name)
             val intent = Intent(it.context, RestaurantDetailsActivity::class.java)
             it.context.startActivity(intent)
         }

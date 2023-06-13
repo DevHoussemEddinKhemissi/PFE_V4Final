@@ -10,10 +10,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import com.facebook.login.LoginManager
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+import com.squareup.picasso.Picasso
+import com.tevah.pfe_v4final.Adapters.RoundedTransformation
+import com.tevah.pfe_v4final.Models.ShopWithDistance
+import com.tevah.pfe_v4final.Models.UserX
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -46,7 +54,7 @@ class AccountFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         val view = inflater.inflate(R.layout.fragment_account, container, false)
-        val boutonLogout = view.findViewById<Button>(R.id.button6)
+        val boutonLogout = view.findViewById<TextView>(R.id.textView42)
 
         boutonLogout.setOnClickListener{
             val databaseName = "Tevah.db"
@@ -62,6 +70,30 @@ class AccountFragment : Fragment() {
             }
             startLogout()
         }
+        val boutonUpdate = view.findViewById<TextView>(R.id.textView39)
+        boutonUpdate.setOnClickListener{
+            val intent = Intent(context, EditprofilmtActivity()::class.java)
+            startActivity(intent)
+
+        }
+
+        val gson = Gson()
+        val sharedPreferences = requireActivity().getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
+        val user =  sharedPreferences.getString("user", null)?.let {
+            val parsedUser = gson.fromJson(it, UserX::class.java)
+
+
+            val imageProfile = view.findViewById<ImageView>(R.id.profileImage)
+            Picasso.get()
+                .load(parsedUser.getImagePath()) // Replace "image_name" with the name of your image file in the drawable folder
+                .transform(RoundedTransformation())
+                .into(imageProfile)
+            val profileName = view.findViewById<TextView>(R.id.nameTextView)
+            val email = view.findViewById<TextView>(R.id.emailTextView)
+            profileName.text = parsedUser.name
+            email.text = parsedUser.email
+        }
+
 
         return view
     }
@@ -100,7 +132,8 @@ class AccountFragment : Fragment() {
 
         //redirect to login
         sharedPref = requireActivity().getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
-        editor = sharedPref.edit().remove("Token")
+        sharedPref.edit().remove("Token")
+        sharedPref.edit().remove("user")
         editor.apply()
 
 

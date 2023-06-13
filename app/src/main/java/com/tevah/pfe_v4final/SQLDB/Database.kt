@@ -15,6 +15,7 @@ class Database(context: Context) : SQLiteOpenHelper(context, "Tevah.db", null, 1
                 "${WishlistEntry.COLUMN_PRIX} TEXT" +
                 ")"
         db.execSQL(createTableQuery)
+
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
