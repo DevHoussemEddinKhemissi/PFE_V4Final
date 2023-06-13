@@ -33,7 +33,10 @@ interface RetrofitAPIInterface {
     fun getData(@Body productDetailGet: ProductDetailGet): Call<ProduitDetailsPageResponce>
 
     @POST("/api/sales/createorder")
-    fun createPayment(@Body order: OrdreSet): Call<OrderResponce>
+    fun createPayment(@Header("x-access-token") token: String, @Body order: OrdreSet): Call<OrderResponce>
+
+    @POST("/api/test/FindOneproductWithFK")
+    fun tallDataGrip(@Body finAllDataOnProduct: FinAllDataOnProduct): Call<AllDataOnProduct>
 
 
 }

@@ -64,8 +64,8 @@ class ProduitGridLayoutAdapter (private val context: Context, var productList: L
         holder.viewproduit.setOnClickListener{
 
             val intent = Intent(it.context, DetailProduit::class.java)
-
-            intent.putExtra("key", product.name)
+            Log.d("tg", "getView: "+product.name)
+            intent.putExtra("keyss", product.name)
 
             it.context.startActivity(intent)
         }

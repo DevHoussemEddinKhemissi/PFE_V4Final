@@ -45,17 +45,7 @@ class AuthentificationActivity : AppCompatActivity() {
         setContentView(R.layout.activity_authentification)
 
 
-        val databaseName = "Tevah.db"
-        val deleted = this.deleteDatabase(databaseName)
-        if (deleted) {
 
-            Log.d("Dropped Database ", "Database dropped ")
-            //Toast.makeText(this, "Database dropped successfully", Toast.LENGTH_SHORT).show()
-        } else {
-            //Toast.makeText(this, "Failed to drop the database", Toast.LENGTH_SHORT).show()
-            Log.d("Failed to drop ", "Database dropped ")
-
-        }
         sharedPref = getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
         editor = sharedPref.edit()
         val value = sharedPref.getString("Token", null)
@@ -82,16 +72,16 @@ class AuthentificationActivity : AppCompatActivity() {
                     or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY)
         }
 
-        // get reference to button
+
         val Signup = findViewById(R.id.others) as TextView
-        // set on-click listener
+
         Signup.setOnClickListener {
             Toast.makeText(this@AuthentificationActivity, "You clicked me.", Toast.LENGTH_SHORT).show()
             intent = Intent(applicationContext, RegisterActivity()::class.java)
             startActivity(intent)
         }
         val btn_click_me = findViewById(R.id.logibtn) as Button
-        // set on-click listener For Normal SignUP
+
         btn_click_me.setOnClickListener {
             Toast.makeText(this@AuthentificationActivity, "You clicked me.", Toast.LENGTH_SHORT).show()
 
@@ -150,13 +140,13 @@ class AuthentificationActivity : AppCompatActivity() {
         }
 
         val btn_login_google = findViewById(R.id.loginGoogleButton) as ImageView
-        // set on-click listener For Google
+
         btn_login_google.setOnClickListener {
             this.loginViaGoogle()
         }
 
         val btn_login_facebook = findViewById(R.id.loginFacebookButton) as ImageView
-        // set on-click listener For Facebook
+
         btn_login_facebook.setOnClickListener {
             loginViaFacebook()
         }
@@ -176,12 +166,12 @@ class AuthentificationActivity : AppCompatActivity() {
                 }
 
                 override fun onCancel() {
-                    // App code
+
                     Toast.makeText(applicationContext, "Login via Facebook canceled", Toast.LENGTH_LONG).show()
                 }
 
                 override fun onError(exception: FacebookException) {
-                    // App code
+
                     Toast.makeText(applicationContext, "Login via Facebook failed", Toast.LENGTH_LONG).show()
                 }
             })
@@ -220,15 +210,12 @@ class AuthentificationActivity : AppCompatActivity() {
                 ApiException::class.java
             )
 
-            // Signed in successfully, show authenticated UI.
-            //updateUI(account);
+
             val token = account.idToken!!
-            //val intent = Intent(this@AuthentificationActivity, TestActivity::class.java)
-            //startActivity(intent)
+
             logViaGoogleNode(token)
         } catch (e: ApiException) {
-            // The ApiException status code indicates the detailed failure reason.
-            // Please refer to the GoogleSignInStatusCodes class reference for more information.
+
            Toast.makeText(this.applicationContext, "Login via Google failed with code ${e.statusCode}", Toast.LENGTH_LONG).show()
             
             //updateUI(null);

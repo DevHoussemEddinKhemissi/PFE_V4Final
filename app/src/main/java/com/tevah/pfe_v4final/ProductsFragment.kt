@@ -74,9 +74,7 @@ class ProductsFragment : Fragment() {
              override fun afterTextChanged(s: Editable?) {}
         })
 
-       /* searchButton.setOnClickListener {
-            showDisclaimerPopup()
-        }*/
+
 
         showProgress()
         fetchAllProducts()
@@ -100,7 +98,7 @@ class ProductsFragment : Fragment() {
         popup.setup("Halo",
             "This is a test text multiline This is a test text multiline This is a test text multiline This is a test text multiline This is a test text multiline This is a test text multiline This is a test text multiline ",
             "Done") {
-            //...Example
+
             Toast.makeText(this.context, "clicked on accept", Toast.LENGTH_SHORT).show()
 
             popup.dismiss()

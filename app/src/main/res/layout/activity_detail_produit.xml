@@ -4,25 +4,24 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/backred"
     tools:context=".DetailProduit">
-
 
 
     <ImageView
         android:id="@+id/ivDishImage"
-        android:layout_width="325dp"
+        android:layout_width="0dp"
         android:layout_height="325dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="16dp"
+
         android:layout_weight="1"
         android:adjustViewBounds="true"
-
+        android:background="@drawable/imagebackgroundshop"
         android:scaleType="centerCrop"
         android:src="@drawable/exempleplat"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        android:background="@drawable/imagebackgroundshop"
-        />
+        app:layout_constraintEnd_toEndOf="@+id/constraintLayout5"
+        app:layout_constraintStart_toStartOf="@+id/constraintLayout5"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout5" />
 
     <TextView
         android:id="@+id/tvDishName"
@@ -31,9 +30,8 @@
         android:layout_below="@id/ivDishImage"
         android:layout_marginTop="16dp"
         android:text="Dish Name"
-        android:textColor="@android:color/black"
-        android:textSize="24sp"
-        android:textStyle="bold"
+        android:textColor="@color/RedText"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="@+id/ivDishImage"
         app:layout_constraintTop_toBottomOf="@+id/ivDishImage" />
 
@@ -45,9 +43,10 @@
         android:layout_below="@id/tvDishDescription"
         android:layout_marginTop="16dp"
         android:text="Price: $10.99"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
+        android:textColor="@color/RedText"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="@+id/ivDishImage"
+        app:layout_constraintStart_toEndOf="@+id/tvDishName"
         app:layout_constraintTop_toBottomOf="@+id/ivDishImage" />
 
     <TextView
@@ -56,82 +55,13 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/tvDishPrice"
         android:text="In Stock: 0"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
+        android:textColor="@color/RedText"
+        android:textSize="14sp"
         app:layout_constraintStart_toStartOf="@+id/tvDishPrice"
         app:layout_constraintTop_toBottomOf="@+id/tvDishPrice" />
 
-    <TextView
-        android:id="@+id/tvDishDescription"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/tvDishName"
-        android:layout_marginTop="32dp"
-        android:text="Dish Description"
-        android:textColor="@android:color/black"
-        android:textSize="16sp"
-        app:layout_constraintStart_toStartOf="@+id/tvDishName"
-        app:layout_constraintTop_toBottomOf="@+id/tvDishName" />
-
 
     <!-- Restaurant Distance -->
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/linearLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="top"
-        android:orientation="horizontal"
-        android:padding="5dp"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="0dp">
-
-        <!-- Restaurant Image -->
-
-        <!-- Restaurant Name -->
-        <ImageView
-            android:id="@+id/ivRestaurantImage"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/pizzaria"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-
-            android:background="@drawable/imagebackgroundshop"/>
-
-        <TextView
-            android:id="@+id/tvRestaurantName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="Restaurant Name"
-            android:textColor="@android:color/black"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvRestaurantDistance"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:text="Distance"
-            android:textColor="@android:color/black"
-            android:textSize="16sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/tvRestaurantName"
-            app:layout_constraintHorizontal_bias="0.467"
-            app:layout_constraintStart_toStartOf="@+id/tvRestaurantName"
-            app:layout_constraintTop_toBottomOf="@+id/tvRestaurantName" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/AjouterWishlist"
@@ -146,8 +76,76 @@
         android:textColor="@color/white"
         app:backgroundTint="@null"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/tvStockQuantity"
-        app:layout_constraintStart_toStartOf="@+id/tvDishDescription" />
+        app:layout_constraintEnd_toEndOf="@+id/ivDishImage"
+        app:layout_constraintStart_toStartOf="@+id/ivDishImage" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout5"
+        android:layout_width="375dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/tvRestaurantDistance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:drawableStart="@drawable/localmap"
+            android:text="Distance"
+            android:textColor="@android:color/black"
+            android:textSize="8sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/tvRestaurantName"
+            app:layout_constraintStart_toStartOf="@+id/tvRestaurantName"
+            app:layout_constraintTop_toBottomOf="@+id/tvRestaurantName" />
+
+        <TextView
+            android:id="@+id/tvRestaurantName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:text="Restaurant Name"
+            android:textColor="@android:color/black"
+            android:textSize="20sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/ivRestaurantImage"
+            tools:layout_editor_absoluteY="8dp" />
+
+        <ImageView
+            android:id="@+id/ivRestaurantImage"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+
+            android:background="@drawable/imagebackgroundshop"
+            android:scaleType="centerCrop"
+            android:src="@drawable/pizzaria"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="126dp"
+        android:layout_marginTop="32dp"
+        app:layout_constraintEnd_toEndOf="@+id/ivDishImage"
+        app:layout_constraintStart_toStartOf="@+id/ivDishImage"
+        app:layout_constraintTop_toBottomOf="@+id/tvDishName">
+
+        <TextView
+            android:id="@+id/tvDishDescription"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:text="Dish Description"
+            android:textColor="@color/RedText"
+            android:textSize="16sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

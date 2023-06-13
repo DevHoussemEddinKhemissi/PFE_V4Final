@@ -4,6 +4,142 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RestaurantDetailsActivity">
+    tools:context=".RestaurantDetailsActivity"
+    android:background="@drawable/backred">
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="375dp"
+                tools:layout_editor_absoluteY="16dp">
+
+                <TextView
+                    android:id="@+id/textView29"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    android:text="Tava Restaurant"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/textView30"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:drawableStart="@drawable/localmap"
+                    android:text="kazi Deiry, Taiger Pass,Chittagong"
+                    app:layout_constraintStart_toStartOf="@+id/textView29"
+                    app:layout_constraintTop_toBottomOf="@+id/textView29" />
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="24dp"
+                    android:layout_marginEnd="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView30"
+                    app:srcCompat="@drawable/testrestogrande" />
+
+                <TextView
+                    android:id="@+id/textView31"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Open today"
+                    android:textSize="12sp"
+                    app:layout_constraintStart_toStartOf="@+id/imageView5"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+
+                <TextView
+                    android:id="@+id/textView32"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="10:00 AM - 12:00 PM"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="@+id/textView31"
+                    app:layout_constraintTop_toBottomOf="@+id/textView31" />
+
+                <TextView
+                    android:id="@+id/textView33"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="Distance"
+                    android:textSize="12sp"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView5"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView5" />
+
+                <TextView
+                    android:id="@+id/textView34"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:text="60 km"
+                    app:layout_constraintEnd_toEndOf="@+id/textView33"
+                    app:layout_constraintTop_toBottomOf="@+id/textView33" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <TextView
+                    android:id="@+id/textView35"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="Découvrez nos meilleurs plats"
+                    android:textSize="25sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="300dp">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView5"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp">
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

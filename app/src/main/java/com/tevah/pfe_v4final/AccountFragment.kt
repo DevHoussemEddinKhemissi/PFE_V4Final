@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -48,9 +49,20 @@ class AccountFragment : Fragment() {
         val boutonLogout = view.findViewById<Button>(R.id.button6)
 
         boutonLogout.setOnClickListener{
+            val databaseName = "Tevah.db"
+            val deleted = requireActivity().deleteDatabase(databaseName)
+            if (deleted) {
+
+                Log.d("Dropped Database ", "Database dropped ")
+                //Toast.makeText(this, "Database dropped successfully", Toast.LENGTH_SHORT).show()
+            } else {
+                //Toast.makeText(this, "Failed to drop the database", Toast.LENGTH_SHORT).show()
+                Log.d("Failed to drop ", "Database dropped ")
+
+            }
             startLogout()
         }
-        // Inflate the layout for this fragment
+
         return view
     }
 
@@ -85,7 +97,7 @@ class AccountFragment : Fragment() {
     }
 
     private fun finishLogout(){
-        //remove shared pref token
+
         //redirect to login
         sharedPref = requireActivity().getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
         editor = sharedPref.edit().remove("Token")

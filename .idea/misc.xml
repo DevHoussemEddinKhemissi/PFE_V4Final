@@ -8,6 +8,7 @@
         <entry key="..\:/Users/Moetez/AndroidStudioProjects/PFE_V4Final/app/src/main/res/drawable-v24/detail_produit_image_shape.xml" value="0.168" />
         <entry key="..\:/Users/Moetez/AndroidStudioProjects/PFE_V4Final/app/src/main/res/drawable-v24/disclaimer_background_shape.xml" value="0.1" />
         <entry key="..\:/Users/Moetez/AndroidStudioProjects/PFE_V4Final/app/src/main/res/drawable-v24/produit_detail_restaurant_card_shape.xml" value="0.165" />
+        <entry key="..\:/Users/Moetez/AndroidStudioProjects/PFE_V4Final/app/src/main/res/drawable/backgroundpayment.xml" value="0.2285" />
         <entry key="..\:/Users/Moetez/AndroidStudioProjects/PFE_V4Final/app/src/main/res/drawable/buttons_corners.xml" value="0.1045" />
         <entry key="..\:/Users/Moetez/AndroidStudioProjects/PFE_V4Final/app/src/main/res/drawable/corner_card_containers_card.xml" value="0.118" />
         <entry key="..\:/Users/Moetez/AndroidStudioProjects/PFE_V4Final/app/src/main/res/drawable/edittextbackground.xml" value="0.1045" />
@@ -23,9 +24,9 @@
         <entry key="..\:/Users/Moetez/AndroidStudioProjects/PFE_V4Final/app/src/main/res/layout/activity_detail_produit.xml" value="0.5" />
         <entry key="..\:/Users/Moetez/AndroidStudioProjects/PFE_V4Final/app/src/main/res/layout/activity_home.xml" value="0.2901849217638691" />
         <entry key="..\:/Users/Moetez/AndroidStudioProjects/PFE_V4Final/app/src/main/res/layout/activity_main_menu.xml" value="0.1" />
-        <entry key="..\:/Users/Moetez/AndroidStudioProjects/PFE_V4Final/app/src/main/res/layout/activity_payment_stripe.xml" value="0.2" />
+        <entry key="..\:/Users/Moetez/AndroidStudioProjects/PFE_V4Final/app/src/main/res/layout/activity_payment_stripe.xml" value="0.22" />
         <entry key="..\:/Users/Moetez/AndroidStudioProjects/PFE_V4Final/app/src/main/res/layout/activity_register.xml" value="0.18" />
-        <entry key="..\:/Users/Moetez/AndroidStudioProjects/PFE_V4Final/app/src/main/res/layout/activity_restaurant_details.xml" value="0.10916919959473151" />
+        <entry key="..\:/Users/Moetez/AndroidStudioProjects/PFE_V4Final/app/src/main/res/layout/activity_restaurant_details.xml" value="0.5" />
         <entry key="..\:/Users/Moetez/AndroidStudioProjects/PFE_V4Final/app/src/main/res/layout/activity_splash_screen.xml" value="0.22" />
         <entry key="..\:/Users/Moetez/AndroidStudioProjects/PFE_V4Final/app/src/main/res/layout/activity_test.xml" value="0.33" />
         <entry key="..\:/Users/Moetez/AndroidStudioProjects/PFE_V4Final/app/src/main/res/layout/card_row_disgn.xml" value="0.33" />
@@ -35,7 +36,7 @@
         <entry key="..\:/Users/Moetez/AndroidStudioProjects/PFE_V4Final/app/src/main/res/layout/fragment_home.xml" value="0.22" />
         <entry key="..\:/Users/Moetez/AndroidStudioProjects/PFE_V4Final/app/src/main/res/layout/fragment_products.xml" value="0.182518115942029" />
         <entry key="..\:/Users/Moetez/AndroidStudioProjects/PFE_V4Final/app/src/main/res/layout/fragment_profile.xml" value="0.25" />
-        <entry key="..\:/Users/Moetez/AndroidStudioProjects/PFE_V4Final/app/src/main/res/layout/fragment_wish_list.xml" value="0.1" />
+        <entry key="..\:/Users/Moetez/AndroidStudioProjects/PFE_V4Final/app/src/main/res/layout/fragment_wish_list.xml" value="0.5" />
         <entry key="..\:/Users/Moetez/AndroidStudioProjects/PFE_V4Final/app/src/main/res/layout/popup_disclaimer.xml" value="0.182518115942029" />
         <entry key="..\:/Users/Moetez/AndroidStudioProjects/PFE_V4Final/app/src/main/res/layout/product_item.xml" value="0.25" />
         <entry key="..\:/Users/Moetez/AndroidStudioProjects/PFE_V4Final/app/src/main/res/layout/produit_row.xml" value="0.33" />
