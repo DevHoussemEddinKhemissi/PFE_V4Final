@@ -23,6 +23,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".paymentnotpassedActivity"
+            android:exported="false" />
+        <activity
+            android:name=".PaymentgoodActivity"
+            android:exported="false" />
+        <activity
             android:name=".PaymentStripeActivity"
             android:exported="false" />
         <activity

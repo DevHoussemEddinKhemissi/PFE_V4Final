@@ -14,7 +14,8 @@ import com.tevah.pfe_v4final.Models.Card
 import com.tevah.pfe_v4final.R
 
 
-class CardAdapter (private val dataholder3: ArrayList<Card>) : RecyclerView.Adapter<CardAdapter.MyViewHolder>() {
+class CardAdapter(private val dataholder3: ArrayList<Card>) :
+    RecyclerView.Adapter<CardAdapter.MyViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.testrow2, parent, false)
@@ -33,7 +34,7 @@ class CardAdapter (private val dataholder3: ArrayList<Card>) : RecyclerView.Adap
             .into(holder.img)
         holder.name.text = cardModel.name
         holder.speciality.text = cardModel.stock.toString()
-        holder.price.text = cardModel.price
+        holder.price.text = cardModel.price.toString()
         holder.quantity.setText("1")
         holder.buttonminus.setOnClickListener {
             val text = holder.quantity.text.toString()
@@ -43,12 +44,13 @@ class CardAdapter (private val dataholder3: ArrayList<Card>) : RecyclerView.Adap
                 intValue -= 1
             }
 
-
             intValue = minOf(intValue, cardModel.stock)
 
             holder.quantity.text = intValue.toString()
-        }
 
+            // Update the quantity value in the Card object
+            cardModel.quantity = intValue
+        }
         holder.buttonplus.setOnClickListener {
             val text = holder.quantity.text.toString()
             var intValue = text.toInt()
@@ -59,14 +61,18 @@ class CardAdapter (private val dataholder3: ArrayList<Card>) : RecyclerView.Adap
                 intValue = cardModel.stock
             }
 
-            // Ensure intValue doesn't go below 1
             intValue = maxOf(intValue, 1)
 
             holder.quantity.text = intValue.toString()
+
+            // Update the quantity value in the Card object
+            cardModel.quantity = intValue
         }
-
-
     }
+
+
+
+
 
     override fun getItemCount(): Int {
         return dataholder3.size

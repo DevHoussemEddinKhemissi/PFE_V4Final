@@ -8,23 +8,18 @@
     android:background="@drawable/backgroundpayment">
 
     <Button
-        android:id="@+id/button5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView6" />
-
-    <Button
         android:id="@+id/button8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="Button"
+        android:text="Payer avec Stripe"
+        android:textColor="@color/white"
+        app:backgroundTint="@null"
+        android:background="@drawable/buttons_corners"
+
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView6" />
 
     <ImageView

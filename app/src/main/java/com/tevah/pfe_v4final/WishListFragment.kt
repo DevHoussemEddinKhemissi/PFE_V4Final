@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +30,7 @@ import com.tevah.pfe_v4final.SQLDB.DatabaseContract
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import kotlin.math.log
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -48,6 +50,7 @@ class WishListFragment : Fragment() {
     private lateinit var dataholder3: ArrayList<Card>
     lateinit var customerConfig: PaymentSheet.CustomerConfiguration
     private var paymentIntentClientSecret: String? = null
+
     var totalPrice: Double = 0.0
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -67,7 +70,7 @@ class WishListFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_wish_list, container, false)
         //val stripe = Stripe(requireContext(), "YOUR_PUBLISHABLE_KEY to complete")
-
+       // val pricess =.findViewById<EditText>(R.id.email)
         database = Database(requireContext())
 
         database = Database(requireContext())
@@ -98,33 +101,55 @@ class WishListFragment : Fragment() {
         layoutManager.orientation = RecyclerView.VERTICAL
         recyclerViewCardList.layoutManager = layoutManager
 
+
         dataholder3 = ArrayList()
 
-
         if (wishlistData.isNotEmpty()) {
-            wishlistDataList.addAll(wishlistData)
+
 
             for (item in wishlistDataList) {
-                val card = Card(item.image, item.name, item.stock, item.price)
+                val card = Card(item.image, item.name, item.stock, item.price.toDouble(), 1)
                 dataholder3.add(card)
-
-
-
             }
         } else {
             Toast.makeText(requireContext(), "Wishlist is empty", Toast.LENGTH_SHORT).show()
         }
 
         recyclerViewCardList.adapter = CardAdapter(dataholder3)
+
+
         val button = view.findViewById<Button>(R.id.button7)
         button.setOnClickListener {
 
+            val selectedProducts = mutableListOf<ProductSelectedforpay>() // List to store selected products
+
+            for (card in dataholder3) {
+                val quantity = card.quantity
+                val price = card.price
+
+
+                val selectedProduct = ProductSelectedforpay(quantity, price)
+
+                selectedProducts.add(selectedProduct)
+               // Log.d("selectedProductS", "onCreateView: "+selectedProducts.toString())
+            }
+            Log.d("selectedProductS", "onCreateView: "+selectedProducts.toString())
+            var totalPrice1 = 0.0 // Variable to store the total price
+
+            for (selectedProduct in selectedProducts) {
+                val quantity = selectedProduct.quantity
+                val price = selectedProduct.price
+
+                val productTotalPrice = quantity * price
+                totalPrice1 += productTotalPrice
+            }
+            Log.d("totalPrice1", "onCreateView: "+selectedProducts.toString()+totalPrice1)
 
             sharedPref = requireContext().getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
 
 
                 val products = listOf(ProductIDQuantity(5,1),ProductIDQuantity(6,1))
-                val order = OrdreSet("10.000", products = products)// Create a new instance of the Project object with the required data
+                val order = OrdreSet(totalPrice1.toString(), products = products)// Create a new instance of the Project object with the required data
 
                 val retrofit = ServiceBuilderRetrofit.buildService(RetrofitAPIInterface::class.java)
 
@@ -224,11 +249,12 @@ class WishListFragment : Fragment() {
 
             totalPrice += itemPrice.toDoubleOrNull() ?: 0.0
 
+            Log.d("WishlistItem", itemId.toString())
         }
 
         cursor.close()
 
-        Log.d("WishlistItem", totalPrice.toString())
+
         return wishlistData
     }
 
