@@ -14,7 +14,7 @@ import com.tevah.pfe_v4final.Models.UserUpdateResponse
 import retrofit2.Callback
 
 class PopupDisclaimer(context: Context) : Dialog(context) {
-    constructor(fragment: Fragment) : this(fragment.requireContext())
+
     fun setup(
         title: String = "Hello",
         contentText: String = "Content description",

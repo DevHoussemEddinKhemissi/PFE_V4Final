@@ -54,7 +54,8 @@ class CardAdapter(private val dataholder3: ArrayList<Card>,private val dbHelper:
             .into(holder.img)
         holder.name.text = cardModel.name
         holder.speciality.text = cardModel.stock.toString()
-        holder.price.text = cardModel.price.toString()
+
+        holder.price.text = cardModel.price.toInt().toString()
         holder.quantity.setText("1")
         holder.buttonminus.setOnClickListener {
             val text = holder.quantity.text.toString()

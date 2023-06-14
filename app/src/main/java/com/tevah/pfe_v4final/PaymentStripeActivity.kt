@@ -4,7 +4,6 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
-import android.widget.Toast
 import com.stripe.android.PaymentConfiguration
 import com.stripe.android.paymentsheet.PaymentSheet
 import com.stripe.android.paymentsheet.PaymentSheetResult
@@ -72,11 +71,11 @@ class PaymentStripeActivity : AppCompatActivity() {
 
                 }
                 popup.show()
-                Toast.makeText(baseContext, "Error"+paymentSheetResult, Toast.LENGTH_SHORT).show()
+
             }
             is PaymentSheetResult.Completed -> {
                 // Display for example, an order confirmation screen
-                Toast.makeText(baseContext, "Completed", Toast.LENGTH_SHORT).show()
+
                 deleteAllData()
                 val popup = PopupDisclaimer(this)
                 popup.setup("Payment Stripe",

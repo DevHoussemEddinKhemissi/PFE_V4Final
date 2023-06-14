@@ -148,7 +148,7 @@ class DetailProduit : AppCompatActivity() {
 
             if (cursor.count > 0) {
 
-                Toast.makeText(this, "Product name already exists", Toast.LENGTH_SHORT).show()
+
             } else {
 
                 val contentValues = ContentValues().apply {
@@ -164,14 +164,20 @@ class DetailProduit : AppCompatActivity() {
 
                 if (newRowId != -1L) {
 
-                    Toast.makeText(this, "Data inserted successfully", Toast.LENGTH_SHORT).show()
+
                 } else {
 
-                    Toast.makeText(this, "Failed to insert data", Toast.LENGTH_SHORT).show()
+
                 }
             }
 
+            val popup = PopupDisclaimer(this)
+            popup.setup("Panier",
+                "Produit ajouter",
+                "Ok") {
+                popup.dismiss()}
             cursor.close()
+
         }
     }}
 

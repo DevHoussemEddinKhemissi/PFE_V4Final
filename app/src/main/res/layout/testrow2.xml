@@ -32,6 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="Product Name"
+        android:textColor="@color/RedText"
         app:layout_constraintBottom_toTopOf="@+id/sepeciality1"
         app:layout_constraintStart_toEndOf="@+id/imagecar1"
         app:layout_constraintTop_toTopOf="@+id/imagecar1" />
@@ -42,6 +43,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="Stock: 10"
+        android:drawableEnd="@drawable/inventaire"
+        android:drawablePadding="8dp"
+        android:textColor="@color/RedText"
         app:layout_constraintBottom_toTopOf="@+id/price1"
         app:layout_constraintStart_toEndOf="@+id/imagecar1"
         app:layout_constraintTop_toBottomOf="@+id/name1" />
@@ -52,6 +56,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:text="Price: $10.99"
+        android:drawableEnd="@drawable/amy"
+        android:drawablePadding="8dp"
+        android:textColor="@color/RedText"
         app:layout_constraintBottom_toBottomOf="@+id/imagecar1"
         app:layout_constraintStart_toEndOf="@+id/imagecar1"
         app:layout_constraintTop_toBottomOf="@+id/sepeciality1" />

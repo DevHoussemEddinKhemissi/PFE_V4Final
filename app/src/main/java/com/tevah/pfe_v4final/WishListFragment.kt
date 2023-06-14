@@ -83,7 +83,8 @@ class WishListFragment : Fragment(), AdapterCallback {
         }
 
         var totalPrice1 = calculateTotal()
-        textViewTotal.text = "$totalPrice1 €"
+        var totalPrice21 = totalPrice1.toInt()
+        textViewTotal.text = "$totalPrice21 €"
         val cardAdapter = CardAdapter(dataholder3, Database(requireContext()))
         cardAdapter.setAdapterCallback(this)
         recyclerViewCardList.adapter = cardAdapter
@@ -242,7 +243,8 @@ class WishListFragment : Fragment(), AdapterCallback {
             dataholder3[index].quantity = quantity
         }
         val total = calculateTotal()
-        textViewTotal.text = "$total €"
+        val total20=total.toInt()
+        textViewTotal.text = "$total20 €"
     }
 
     override fun remove(id: Long) {

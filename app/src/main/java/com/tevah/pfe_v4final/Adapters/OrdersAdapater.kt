@@ -12,6 +12,8 @@ import com.tevah.pfe_v4final.API.PathImages
 import com.tevah.pfe_v4final.Models.OrderX
 import com.tevah.pfe_v4final.Models.Produit
 import com.tevah.pfe_v4final.R
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class OrdersAdapater (private var orders: List<OrderX>) :
@@ -27,6 +29,11 @@ class OrdersAdapater (private var orders: List<OrderX>) :
         holder.bind(model)
     }
 
+    fun formatDateTime(dateString: String): String {
+        val format = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
+        val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault()).parse(dateString)
+        return format.format(date)
+    }
     override fun getItemCount(): Int {
         return orders.size
     }
@@ -36,10 +43,17 @@ class OrdersAdapater (private var orders: List<OrderX>) :
         private val prixtotal: TextView = itemView.findViewById(R.id.textView11)
         private val statu: TextView = itemView.findViewById(R.id.textView8)
 
+        private val nomproduit: TextView = itemView.findViewById(R.id.textView12)
         fun bind(model: OrderX) {
             val prix = model.product.prix.toDouble() * model.quantity
             prixtotal.text = "$prix €"
-            dateAchat.text = model.createdAt
+            val date = formatDateTime(model.createdAt)
+            dateAchat.text = date.toString()
+            nomproduit.text=model.product.name
+
+
+            println(date)
+            Log.d("TAGiii", "bind: "+model.createdAt)
             if (model.payee){
                 statu.text = "Payée"
             }else {

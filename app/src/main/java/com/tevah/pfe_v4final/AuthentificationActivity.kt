@@ -84,7 +84,7 @@ class AuthentificationActivity : AppCompatActivity() {
         val btn_click_me = findViewById(R.id.logibtn) as Button
 
         btn_click_me.setOnClickListener {
-            Toast.makeText(this@AuthentificationActivity, "You clicked me.", Toast.LENGTH_SHORT).show()
+
 
 
             val obj = UserSignin(
@@ -100,7 +100,7 @@ class AuthentificationActivity : AppCompatActivity() {
 
                         val bat = response.body().toString()
 
-                        Toast.makeText(this@AuthentificationActivity,bat, Toast.LENGTH_LONG).show()
+
                         Log.d("Success", bat)
                         if (response.body()?.message.toString()=="User Found."){
                             val battoken = response.body()?.accessToken.toString()
