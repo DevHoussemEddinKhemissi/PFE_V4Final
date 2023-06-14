@@ -2,6 +2,8 @@ package com.tevah.pfe_v4final.API
 
 
 import com.tevah.pfe_v4final.Models.*
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.http.*
@@ -38,8 +40,9 @@ interface RetrofitAPIInterface {
     @POST("/api/test/FindOneproductWithFK")
     fun tallDataGrip(@Body finAllDataOnProduct: FinAllDataOnProduct): Call<AllDataOnProduct>
 
+    @Multipart
     @PUT("/api/user")
-    fun updateUser(@Header("x-access-token") token: String, @Body userBody: UpdateUserRequest): Call<UserUpdateResponse>
+    fun updateUser(@Header("x-access-token") token: String, @Part("name") name: RequestBody, @Part("newpassword") newpassword: RequestBody, @Part("oldpassword") oldpassword: RequestBody, @Part image: MultipartBody.Part?): Call<UserUpdateResponse>
 
 
 }

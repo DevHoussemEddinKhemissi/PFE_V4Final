@@ -6,7 +6,8 @@ data class UserX(
     val email: String,
     val name: String,
     val roles: List<Role>,
-    val image: String
+    val image: String,
+    val initiatefrom: String
 ) {
     fun getImagePath(): String {
         val myPath = PathImages.STATIC_PATH_BASE

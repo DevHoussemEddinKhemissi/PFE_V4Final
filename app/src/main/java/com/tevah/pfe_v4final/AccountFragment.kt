@@ -38,8 +38,7 @@ class AccountFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     lateinit var sharedPref: SharedPreferences
-    lateinit var editor: SharedPreferences.Editor
-
+    var initfrom = "tevah"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -47,6 +46,32 @@ class AccountFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        val gson = Gson()
+        val sharedPreferences = requireActivity().getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
+        val user =  sharedPreferences.getString("user", null)?.let {
+            val parsedUser = gson.fromJson(it, UserX::class.java)
+
+
+            val imageProfile = view?.findViewById<ImageView>(R.id.profileImage)
+            Picasso.get()
+                .load(parsedUser.getImagePath()) // Replace "image_name" with the name of your image file in the drawable folder
+                .transform(RoundedTransformation())
+                .into(imageProfile)
+            val profileName = view?.findViewById<TextView>(R.id.nameTextView)
+            val email = view?.findViewById<TextView>(R.id.emailTextView)
+            if (profileName != null) {
+                profileName.text = parsedUser.name
+            }
+            if (email != null) {
+                email.text = parsedUser.email
+            }
+            this.initfrom = parsedUser.initiatefrom
+        }
     }
 
     override fun onCreateView(
@@ -70,29 +95,24 @@ class AccountFragment : Fragment() {
             }
             startLogout()
         }
+
+
         val boutonUpdate = view.findViewById<TextView>(R.id.textView39)
         boutonUpdate.setOnClickListener{
-            val intent = Intent(context, EditprofilmtActivity()::class.java)
-            startActivity(intent)
-
+            if (initfrom == "tevah") {
+                val intent = Intent(context, EditprofilmtActivity()::class.java)
+                startActivity(intent)
+            }else {
+                val popup = PopupDisclaimer(requireContext())
+                popup.setup("Non modifiable!",
+                    "Ce compte est lié un outil externe, est non modifiable",
+                    "Ok") {
+                    popup.dismiss()
+                }
+                popup.show()
+            }
         }
 
-        val gson = Gson()
-        val sharedPreferences = requireActivity().getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
-        val user =  sharedPreferences.getString("user", null)?.let {
-            val parsedUser = gson.fromJson(it, UserX::class.java)
-
-
-            val imageProfile = view.findViewById<ImageView>(R.id.profileImage)
-            Picasso.get()
-                .load(parsedUser.getImagePath()) // Replace "image_name" with the name of your image file in the drawable folder
-                .transform(RoundedTransformation())
-                .into(imageProfile)
-            val profileName = view.findViewById<TextView>(R.id.nameTextView)
-            val email = view.findViewById<TextView>(R.id.emailTextView)
-            profileName.text = parsedUser.name
-            email.text = parsedUser.email
-        }
 
 
         return view
@@ -132,9 +152,8 @@ class AccountFragment : Fragment() {
 
         //redirect to login
         sharedPref = requireActivity().getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
-        sharedPref.edit().remove("Token")
-        sharedPref.edit().remove("user")
-        editor.apply()
+        sharedPref.edit().remove("Token").apply()
+        sharedPref.edit().remove("user").apply()
 
 
 

@@ -4,5 +4,5 @@ data class UserRegisterResponce(
     val code: String,
     val message: String,
     val err: String,
-    val user: User
+    val user: UserXX
 )
