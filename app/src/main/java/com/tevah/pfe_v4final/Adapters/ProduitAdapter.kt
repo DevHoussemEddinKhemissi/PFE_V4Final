@@ -1,5 +1,6 @@
 package com.tevah.pfe_v4final.Adapters
 
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
 import com.tevah.pfe_v4final.API.PathImages
+import com.tevah.pfe_v4final.DetailProduit
 import com.tevah.pfe_v4final.Models.Produit
 import com.tevah.pfe_v4final.R
 
@@ -33,7 +35,7 @@ class ProduitAdapter (private val produit: List<Produit>) :
         private val img: ImageView = itemView.findViewById(R.id.categoryimage)
         private val distance: TextView = itemView.findViewById(R.id.distance)
         private val time: TextView = itemView.findViewById(R.id.time)
-
+        private val vu: View = itemView.findViewById(R.id.simon)
         fun bind(model: Produit) {
 
             val myPath = PathImages.STATIC_PATH
@@ -50,6 +52,14 @@ class ProduitAdapter (private val produit: List<Produit>) :
 
             distance.text = model.name
             time.text = model.shop.name
+            vu.setOnClickListener{
+                val intent = Intent(it.context, DetailProduit::class.java)
+                Log.d("tg", "getView: "+model.name)
+                intent.putExtra("keyss", model.name)
+
+                it.context.startActivity(intent)
+            }
+
 
 
         }

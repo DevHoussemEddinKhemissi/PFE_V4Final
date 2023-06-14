@@ -1,11 +1,12 @@
 package com.tevah.pfe_v4final
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import com.tevah.pfe_v4final.API.RetrofitAPIInterface
 import com.tevah.pfe_v4final.API.ServiceBuilderRetrofit
 import com.tevah.pfe_v4final.Models.UserRegister
@@ -14,6 +15,7 @@ import retrofit2.Call
 import retrofit2.Response
 
 class RegisterActivity : AppCompatActivity() {
+    private lateinit var context: Context
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -43,16 +45,32 @@ class RegisterActivity : AppCompatActivity() {
 
 
                         val bat = obj.toString()
+                        val popup = PopupDisclaimer(context)
+                        popup.setup("Payment Stripe",
+                            "Enregistrement réussi",
+                            "Ok") {
+                            intent = Intent(applicationContext, AuthentificationActivity()::class.java)
+                            startActivity(intent)
+                            popup.dismiss()
 
-                        Toast.makeText(this@RegisterActivity,bat, Toast.LENGTH_LONG).show()
-                        Log.d("Success", obj.toString())
+                        }
+
+
 
 
                     }
 
                     override fun onFailure(call: Call<UserRegisterResponce>, t: Throwable) {
-                        Toast.makeText(this@RegisterActivity,t.toString(), Toast.LENGTH_LONG).show()
+
                         Log.d("onFailure", t.toString())
+                        val popup = PopupDisclaimer(context)
+                        popup.setup("Enregistrement échoué",
+                            "",
+                            "Ok") {
+                            popup.dismiss()
+
+                        }
+
 
                     }
 

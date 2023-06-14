@@ -1,25 +1,14 @@
 package com.tevah.pfe_v4final
 
-import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Button
 import android.widget.Toast
 import com.stripe.android.PaymentConfiguration
 import com.stripe.android.paymentsheet.PaymentSheet
 import com.stripe.android.paymentsheet.PaymentSheetResult
-import com.tevah.pfe_v4final.API.RetrofitAPIInterface
-import com.tevah.pfe_v4final.API.ServiceBuilderRetrofit
-import com.tevah.pfe_v4final.Models.OrderResponce
-import com.tevah.pfe_v4final.Models.OrdreSet
-import com.tevah.pfe_v4final.Models.ProductIDQuantity
 import com.tevah.pfe_v4final.SQLDB.Database
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import kotlin.math.log
 
 class PaymentStripeActivity : AppCompatActivity() {
     lateinit var paymentSheet: PaymentSheet
@@ -64,10 +53,25 @@ class PaymentStripeActivity : AppCompatActivity() {
         when(paymentSheetResult) {
             is PaymentSheetResult.Canceled -> {
                 print("Canceled")
-                Toast.makeText(baseContext, "Canceled", Toast.LENGTH_SHORT).show()
+                val popup = PopupDisclaimer(this)
+                popup.setup("Payment Stripe",
+                    "Annulation de la transaction",
+                    "Ok") {
+                    popup.dismiss()
+
+                }
+
             }
             is PaymentSheetResult.Failed -> {
                 print("Error: ${paymentSheetResult.error}")
+                val popup = PopupDisclaimer(this)
+                popup.setup("Payment Stripe",
+                    "votre paiement a échoué ",
+                    "Ok") {
+                    popup.dismiss()
+
+                }
+                popup.show()
                 Toast.makeText(baseContext, "Error"+paymentSheetResult, Toast.LENGTH_SHORT).show()
             }
             is PaymentSheetResult.Completed -> {
@@ -76,7 +80,7 @@ class PaymentStripeActivity : AppCompatActivity() {
                 deleteAllData()
                 val popup = PopupDisclaimer(this)
                 popup.setup("Payment Stripe",
-                    "Votre Paiment est passer avec succée",
+                    "Votre Paiement est passé avec succès",
                     "Ok") {
                     popup.dismiss()
                     this.finish()

@@ -8,7 +8,6 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -20,24 +19,23 @@ import com.tevah.pfe_v4final.Adapters.RoundedTransformation
 import com.tevah.pfe_v4final.Models.UserUpdateResponse
 import com.tevah.pfe_v4final.Models.UserX
 import com.tevah.pfe_v4final.Models.UserXX
-import okhttp3.MediaType
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
-import okhttp3.RequestBody.Companion.asRequestBody
 import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
-import java.io.File
 import java.io.InputStream
 
 class EditprofilmtActivity : AppCompatActivity() {
+    private lateinit var context: Context
     var PICK_IMAGE_REQUEST = 58585
     var newFileUri: Uri? = null
     lateinit var profileName: TextView
     lateinit var oldpasswordTextView: TextView
     lateinit var newPasswordTextView: TextView
-    private lateinit var context: Context
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_editprofilmt)
         context = this
@@ -74,6 +72,7 @@ class EditprofilmtActivity : AppCompatActivity() {
     }
 
     private fun saveChanges(){
+
         val newName = profileName.text.toString()
         val oldPassword = oldpasswordTextView.text.toString()
         val newPassword = newPasswordTextView.text.toString()
@@ -85,7 +84,7 @@ class EditprofilmtActivity : AppCompatActivity() {
             errorText += "* Pour changer le mot de passe, remplissez l'anciens et le nouveaux champs\n"
         }
         if (errorText.length > 0) {
-            val popup = PopupDisclaimer(this)
+            val popup = PopupDisclaimer(context)
             popup.setup("Vérifier les entrées !",
                 errorText,
                 "Annuler") {
@@ -119,13 +118,13 @@ class EditprofilmtActivity : AppCompatActivity() {
                 MultipartBody.Part.createFormData("image", "image.jpg", request)
             }
         }
-
+        val popup = PopupDisclaimer(this)
         val call = retrofit.updateUser(token,nameRequestBody, newPasswordRequestBody,oldPasswordRequestBody,imagePart)
         call.enqueue(object : retrofit2.Callback<UserUpdateResponse> {
             override fun onResponse(call: Call<UserUpdateResponse>, response: retrofit2.Response<UserUpdateResponse>) {
                 if (response.isSuccessful) {
                     response.body()?.let { setNewUser(it.user) }
-                    val popup = PopupDisclaimer(context)
+
                     popup.setup("Mis à jour !",
                         "Profil mis à jour",
                         "Ok") {
@@ -133,7 +132,7 @@ class EditprofilmtActivity : AppCompatActivity() {
                     }
                     popup.show()
                 }else {
-                    val popup = PopupDisclaimer(context)
+
                     popup.setup("Oops !",
                         "Ancienne mot de passe incompatible",
                         "Ok") {
@@ -144,7 +143,7 @@ class EditprofilmtActivity : AppCompatActivity() {
             }
 
             override fun onFailure(call: Call<UserUpdateResponse>, t: Throwable) {
-                val popup = PopupDisclaimer(context)
+
                 popup.setup("Oops !",
                     t.toString(),
                     "Ok") {

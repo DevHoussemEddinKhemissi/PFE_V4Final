@@ -74,10 +74,10 @@ class AuthentificationActivity : AppCompatActivity() {
         }
 
 
-        val Signup = findViewById(R.id.others) as TextView
+        val Signup = findViewById(R.id.logibtn1) as Button
 
         Signup.setOnClickListener {
-            Toast.makeText(this@AuthentificationActivity, "You clicked me.", Toast.LENGTH_SHORT).show()
+
             intent = Intent(applicationContext, RegisterActivity()::class.java)
             startActivity(intent)
         }
@@ -123,8 +123,7 @@ class AuthentificationActivity : AppCompatActivity() {
                     }
 
                     override fun onFailure(call: Call<UserSigninResponce>, t: Throwable) {
-                        Toast.makeText(this@AuthentificationActivity,t.toString(), Toast.LENGTH_LONG).show()
-                        Log.d("onFailure", t.toString())
+
                     }
 
 
@@ -169,12 +168,12 @@ class AuthentificationActivity : AppCompatActivity() {
 
                 override fun onCancel() {
 
-                    Toast.makeText(applicationContext, "Login via Facebook canceled", Toast.LENGTH_LONG).show()
+
                 }
 
                 override fun onError(exception: FacebookException) {
 
-                    Toast.makeText(applicationContext, "Login via Facebook failed", Toast.LENGTH_LONG).show()
+
                 }
             })
         LoginManager.getInstance().logInWithReadPermissions(this@AuthentificationActivity, listOf("email","public_profile"))
@@ -218,7 +217,7 @@ class AuthentificationActivity : AppCompatActivity() {
             logViaGoogleNode(token)
         } catch (e: ApiException) {
 
-           Toast.makeText(this.applicationContext, "Login via Google failed with code ${e.statusCode}", Toast.LENGTH_LONG).show()
+
             
             //updateUI(null);
         }
@@ -235,7 +234,7 @@ class AuthentificationActivity : AppCompatActivity() {
                 ) {
                     val bat = response.body().toString()
 
-                    Toast.makeText(this@AuthentificationActivity,bat, Toast.LENGTH_LONG).show()
+
                     Log.d("Success", bat)
                     if (response.body()?.message.toString()=="User Found."){
                         val battoken = response.body()?.accessToken.toString()
@@ -258,7 +257,8 @@ class AuthentificationActivity : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<UserSigninResponce>, t: Throwable) {
-                    Toast.makeText(baseContext, "Failed login facebook from node",Toast.LENGTH_SHORT).show()
+
+
                 }
 
 
@@ -277,7 +277,7 @@ class AuthentificationActivity : AppCompatActivity() {
                 ) {
                     val bat = response.body().toString()
 
-                    Toast.makeText(this@AuthentificationActivity,bat, Toast.LENGTH_LONG).show()
+
                     Log.d("Success", bat)
                     if (response.body()?.message.toString()=="User Found."){
                         val battoken = response.body()?.accessToken.toString()
@@ -300,7 +300,7 @@ class AuthentificationActivity : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<UserSigninResponce>, t: Throwable) {
-                    Toast.makeText(baseContext, "Failed login facebook from node",Toast.LENGTH_SHORT).show()
+
                 }
 
 

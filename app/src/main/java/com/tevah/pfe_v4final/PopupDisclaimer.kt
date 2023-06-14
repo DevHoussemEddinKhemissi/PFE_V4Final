@@ -8,10 +8,19 @@ import android.os.Bundle
 import android.view.Window
 import android.widget.Button
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import com.tevah.pfe_v4final.Models.UserRegisterResponce
+import com.tevah.pfe_v4final.Models.UserUpdateResponse
+import retrofit2.Callback
 
-class PopupDisclaimer (context: Context) : Dialog(context) {
-
-    fun setup(title: String = "Hello", contentText: String = "Content description", buttonText: String = "Accept", listener: () -> Unit){
+class PopupDisclaimer(context: Context) : Dialog(context) {
+    constructor(fragment: Fragment) : this(fragment.requireContext())
+    fun setup(
+        title: String = "Hello",
+        contentText: String = "Content description",
+        buttonText: String = "Accept",
+        listener: () -> Unit
+    ) {
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         setContentView(R.layout.popup_disclaimer)
         val disclaimerTitle = findViewById<TextView>(R.id.disclaimer_title_text)
@@ -30,5 +39,4 @@ class PopupDisclaimer (context: Context) : Dialog(context) {
         super.onCreate(savedInstanceState)
         window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
     }
-
 }
