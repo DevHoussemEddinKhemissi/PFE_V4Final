@@ -41,6 +41,7 @@ class ShopAdapter(private val shopModels: List<ShopWithDistance>) : RecyclerView
         holder.button.setOnClickListener {
             Log.i(TAG, "onClick: " + shopModel.shop.name)
             val intent = Intent(it.context, RestaurantDetailsActivity::class.java)
+            intent.putExtra("shop",shopModel)
             it.context.startActivity(intent)
         }
     }

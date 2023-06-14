@@ -1,6 +1,7 @@
 package com.tevah.pfe_v4final.Models
 
 import com.tevah.pfe_v4final.API.PathImages
+import java.io.Serializable
 
 data class Shop(
     val id: Int,
@@ -12,7 +13,7 @@ data class Shop(
     val latitude: String,
     val createdAt: String,
     val updatedAt: String
-) {
+): Serializable {
     fun getImagePath(): String {
         val myPath = PathImages.STATIC_PATH_BASE
         val imagepath = image.replaceFirst("%server_tevah_api_endpoint%",myPath)

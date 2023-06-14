@@ -44,5 +44,10 @@ interface RetrofitAPIInterface {
     @PUT("/api/user")
     fun updateUser(@Header("x-access-token") token: String, @Part("name") name: RequestBody, @Part("newpassword") newpassword: RequestBody, @Part("oldpassword") oldpassword: RequestBody, @Part image: MultipartBody.Part?): Call<UserUpdateResponse>
 
+    @GET("/api/test/FindOneshop/{shopId}")
+    fun getShopProducts(@Path("shopId") userId: Int): Call<ShopProductsResponse>
+
+    @GET("/api/orders")
+    fun getAllOrders(@Header("x-access-token") token: String): Call<ListOrderResponce>
 
 }

@@ -59,44 +59,18 @@ class WishListFragment : Fragment(), AdapterCallback {
         }
     }
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_wish_list, container, false)
-        //val stripe = Stripe(requireContext(), "YOUR_PUBLISHABLE_KEY to complete")
-       // val pricess =.findViewById<EditText>(R.id.email)
-        textViewTotal = view.findViewById(R.id.textView22)
-
+    override fun onResume() {
+        super.onResume()
         database = Database(requireContext())
 
         val wishlistDataList: ArrayList<WishlistItem> = ArrayList()
 
         val wishlistData = getAllWishlistData()
         if (wishlistData.isNotEmpty()) {
-
             wishlistDataList.addAll(wishlistData)
-
-
-            for (item in wishlistDataList) {
-
-                Log.d("WishlistItem", item.toString())
-
-
-
-            }
         } else {
             // Wishlist table is empty, handle the scenario accordingly
         }
-
-
-        recyclerViewCardList = view.findViewById(R.id.recyclerView3)
-        val layoutManager = LinearLayoutManager(requireContext())
-        layoutManager.orientation = RecyclerView.VERTICAL
-        recyclerViewCardList.layoutManager = layoutManager
-
-
         dataholder3 = ArrayList()
 
         if (wishlistData.isNotEmpty()) {
@@ -107,12 +81,26 @@ class WishListFragment : Fragment(), AdapterCallback {
         } else {
             Toast.makeText(requireContext(), "Wishlist is empty", Toast.LENGTH_SHORT).show()
         }
+
         var totalPrice1 = calculateTotal()
         textViewTotal.text = "$totalPrice1 €"
         val cardAdapter = CardAdapter(dataholder3, Database(requireContext()))
         cardAdapter.setAdapterCallback(this)
         recyclerViewCardList.adapter = cardAdapter
+    }
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_wish_list, container, false)
+        //val stripe = Stripe(requireContext(), "YOUR_PUBLISHABLE_KEY to complete")
+       // val pricess =.findViewById<EditText>(R.id.email)
+        textViewTotal = view.findViewById(R.id.textView22)
+        recyclerViewCardList = view.findViewById(R.id.recyclerView3)
+        val layoutManager = LinearLayoutManager(requireContext())
+        layoutManager.orientation = RecyclerView.VERTICAL
+        recyclerViewCardList.layoutManager = layoutManager
         val button = view.findViewById<Button>(R.id.button7)
         button.setOnClickListener {
 

@@ -15,6 +15,7 @@ import com.tevah.pfe_v4final.API.ServiceBuilderRetrofit
 import com.tevah.pfe_v4final.Models.OrderResponce
 import com.tevah.pfe_v4final.Models.OrdreSet
 import com.tevah.pfe_v4final.Models.ProductIDQuantity
+import com.tevah.pfe_v4final.SQLDB.Database
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -55,6 +56,10 @@ class PaymentStripeActivity : AppCompatActivity() {
 
 
     }
+    private fun deleteAllData() {
+        Database(context = this).deleteAllData()
+        // Handle any additional logic after deleting all data
+    }
     fun onPaymentSheetResult(paymentSheetResult: PaymentSheetResult) {
         when(paymentSheetResult) {
             is PaymentSheetResult.Canceled -> {
@@ -68,10 +73,20 @@ class PaymentStripeActivity : AppCompatActivity() {
             is PaymentSheetResult.Completed -> {
                 // Display for example, an order confirmation screen
                 Toast.makeText(baseContext, "Completed", Toast.LENGTH_SHORT).show()
+                deleteAllData()
+                val popup = PopupDisclaimer(this)
+                popup.setup("Payment Stripe",
+                    "Votre Paiment est passer avec succée",
+                    "Ok") {
+                    popup.dismiss()
+                    this.finish()
+                }
+                popup.show()
 
 
             }
         }
 
     }
+
 }

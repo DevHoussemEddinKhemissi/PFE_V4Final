@@ -63,10 +63,10 @@ class HomeFragment : Fragment() {
         val sharedPreferences = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
         return sharedPreferences.getString(key, null)
     }
-  /*  private fun getValueFromSharedPreferences(): String? {
+    /*  private fun getValueFromSharedPreferences(): String? {
 
-        return sharedPreferences.getString("sortedShops", null)
-    }*/
+          return sharedPreferences.getString("sortedShops", null)
+      }*/
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -86,7 +86,8 @@ class HomeFragment : Fragment() {
         sharedPreferences = requireActivity().getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
         val sortedShopsJson = getValuesFromSharedPreferences("sortedShops")
         val personListType = object : TypeToken<ArrayList<ShopWithDistance>>() {}.type
-         dataholder3= gson.fromJson(sortedShopsJson, personListType)
+        dataholder3= gson.fromJson(sortedShopsJson, personListType)
+        dataholder3.sortBy { it.distance }
         Log.d("dataholder 3", "onCreateView: "+dataholder3)
         val value = sharedPreferences.getString("Token", "")
         Log.d("RetriveLogin", value.toString())

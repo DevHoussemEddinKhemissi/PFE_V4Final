@@ -3,6 +3,7 @@ import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.tevah.pfe_v4final.SQLDB.DatabaseContract.WishlistEntry
+import com.tevah.pfe_v4final.SQLDB.DatabaseContract.WishlistEntry.TABLE_NAME
 
 class Database(context: Context) : SQLiteOpenHelper(context, "Tevah.db", null, 1) {
     override fun onCreate(db: SQLiteDatabase) {
@@ -20,6 +21,12 @@ class Database(context: Context) : SQLiteOpenHelper(context, "Tevah.db", null, 1
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         // Handle database upgrade if needed
+    }
+
+    fun deleteAllData() {
+        val db = writableDatabase
+        db.delete(TABLE_NAME, null, null)
+        db.close()
     }
     fun deleteProduct(name: String): Int {
         val db = writableDatabase

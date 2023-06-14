@@ -113,6 +113,13 @@ class AccountFragment : Fragment() {
             }
         }
 
+        val boutonOrders = view.findViewById<TextView>(R.id.textView40)
+        boutonOrders.setOnClickListener{
+            val intent = Intent(requireContext(), Orders::class.java)
+            startActivity(intent)
+        }
+
+
 
 
         return view

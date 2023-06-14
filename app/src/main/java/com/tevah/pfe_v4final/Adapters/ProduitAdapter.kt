@@ -51,6 +51,7 @@ class ProduitAdapter (private val produit: List<Produit>) :
             distance.text = model.name
             time.text = model.shop.name
 
+
         }
     }
 }
