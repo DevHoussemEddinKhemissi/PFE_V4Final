@@ -69,6 +69,7 @@ class PaymentStripeActivity : AppCompatActivity() {
                 // Display for example, an order confirmation screen
                 Toast.makeText(baseContext, "Completed", Toast.LENGTH_SHORT).show()
 
+
             }
         }
 

@@ -12,17 +12,37 @@ import com.squareup.picasso.Picasso
 import com.tevah.pfe_v4final.API.PathImages
 import com.tevah.pfe_v4final.Models.Card
 import com.tevah.pfe_v4final.R
+import android.content.Context
+import android.database.sqlite.SQLiteDatabase
+import android.database.sqlite.SQLiteOpenHelper
+import com.tevah.pfe_v4final.SQLDB.Database
+import com.tevah.pfe_v4final.SQLDB.DatabaseContract.WishlistEntry
 
+interface AdapterCallback {
+    fun onUpdateValue(name: String, quantity: Int)
+    fun remove(id: Long)
+}
 
-class CardAdapter(private val dataholder3: ArrayList<Card>) :
+class CardAdapter(private val dataholder3: ArrayList<Card>,private val dbHelper: Database) :
     RecyclerView.Adapter<CardAdapter.MyViewHolder>() {
 
+    private var adapterCallback: AdapterCallback? = null
+
+    fun setAdapterCallback(callback: AdapterCallback) {
+        adapterCallback = callback
+    }
+
+    fun deleteItemByName(name: String) {
+
+
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.testrow2, parent, false)
         return MyViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+
         val cardModel = dataholder3[position]
         val myPath = PathImages.STATIC_PATH
         Log.d("testproduit", "onBindViewHolder: "+cardModel.image)
@@ -47,7 +67,7 @@ class CardAdapter(private val dataholder3: ArrayList<Card>) :
             intValue = minOf(intValue, cardModel.stock)
 
             holder.quantity.text = intValue.toString()
-
+            adapterCallback?.onUpdateValue(cardModel.name,intValue)
             // Update the quantity value in the Card object
             cardModel.quantity = intValue
         }
@@ -64,20 +84,16 @@ class CardAdapter(private val dataholder3: ArrayList<Card>) :
             intValue = maxOf(intValue, 1)
 
             holder.quantity.text = intValue.toString()
-
+            adapterCallback?.onUpdateValue(cardModel.name,intValue)
             // Update the quantity value in the Card object
             cardModel.quantity = intValue
         }
         holder.deletebutton.setOnClickListener {
-            val position = holder.adapterPosition
-            removeItem(position)
+
+
+            dbHelper.deleteProduct(cardModel.name)
+            adapterCallback?.remove(cardModel.id)
         }
-    }
-
-
-    fun removeItem(position: Int) {
-        dataholder3.removeAt(position)
-        notifyItemRemoved(position)
     }
 
 
@@ -96,4 +112,6 @@ class CardAdapter(private val dataholder3: ArrayList<Card>) :
         val deletebutton:TextView = itemView.findViewById(R.id.deleteButton)
 
     }
+
+
 }

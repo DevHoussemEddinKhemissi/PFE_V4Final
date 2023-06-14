@@ -10,19 +10,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.EditText
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.stripe.android.ApiResultCallback
-import com.stripe.android.PaymentConfiguration
-import com.stripe.android.Stripe
-import com.stripe.android.model.PaymentMethodCreateParams
 import com.stripe.android.paymentsheet.PaymentSheet
-import com.stripe.android.paymentsheet.PaymentSheetResult
-import com.stripe.android.view.CardInputWidget
 import com.tevah.pfe_v4final.API.RetrofitAPIInterface
 import com.tevah.pfe_v4final.API.ServiceBuilderRetrofit
+import com.tevah.pfe_v4final.Adapters.AdapterCallback
 import com.tevah.pfe_v4final.Adapters.CardAdapter
 import com.tevah.pfe_v4final.Models.*
 import com.tevah.pfe_v4final.SQLDB.Database
@@ -30,7 +25,6 @@ import com.tevah.pfe_v4final.SQLDB.DatabaseContract
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import kotlin.math.log
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -43,13 +37,14 @@ private const val ARG_PARAM2 = "param2"
  * Use the [WishListFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class WishListFragment : Fragment() {
+class WishListFragment : Fragment(), AdapterCallback {
     lateinit var sharedPref: SharedPreferences
     private lateinit var database: Database
     private lateinit var recyclerViewCardList: RecyclerView
     private lateinit var dataholder3: ArrayList<Card>
     lateinit var customerConfig: PaymentSheet.CustomerConfiguration
     private var paymentIntentClientSecret: String? = null
+    lateinit var textViewTotal: TextView
 
     var totalPrice: Double = 0.0
     // TODO: Rename and change types of parameters
@@ -64,6 +59,7 @@ class WishListFragment : Fragment() {
         }
     }
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -71,7 +67,7 @@ class WishListFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_wish_list, container, false)
         //val stripe = Stripe(requireContext(), "YOUR_PUBLISHABLE_KEY to complete")
        // val pricess =.findViewById<EditText>(R.id.email)
-        database = Database(requireContext())
+        textViewTotal = view.findViewById(R.id.textView22)
 
         database = Database(requireContext())
 
@@ -95,7 +91,6 @@ class WishListFragment : Fragment() {
         }
 
 
-
         recyclerViewCardList = view.findViewById(R.id.recyclerView3)
         val layoutManager = LinearLayoutManager(requireContext())
         layoutManager.orientation = RecyclerView.VERTICAL
@@ -105,18 +100,18 @@ class WishListFragment : Fragment() {
         dataholder3 = ArrayList()
 
         if (wishlistData.isNotEmpty()) {
-
-
             for (item in wishlistDataList) {
-                val card = Card(item.image, item.name, item.stock, item.price.toDouble(), 1)
+                val card = Card(item.id,item.image, item.name, item.stock, item.price.toDouble(), 1)
                 dataholder3.add(card)
             }
         } else {
             Toast.makeText(requireContext(), "Wishlist is empty", Toast.LENGTH_SHORT).show()
         }
-
-        recyclerViewCardList.adapter = CardAdapter(dataholder3)
-
+        var totalPrice1 = calculateTotal()
+        textViewTotal.text = "$totalPrice1 €"
+        val cardAdapter = CardAdapter(dataholder3, Database(requireContext()))
+        cardAdapter.setAdapterCallback(this)
+        recyclerViewCardList.adapter = cardAdapter
 
         val button = view.findViewById<Button>(R.id.button7)
         button.setOnClickListener {
@@ -134,21 +129,13 @@ class WishListFragment : Fragment() {
                // Log.d("selectedProductS", "onCreateView: "+selectedProducts.toString())
             }
             Log.d("selectedProductS", "onCreateView: "+selectedProducts.toString())
-            var totalPrice1 = 0.0 // Variable to store the total price
-
-            for (selectedProduct in selectedProducts) {
-                val quantity = selectedProduct.quantity
-                val price = selectedProduct.price
-
-                val productTotalPrice = quantity * price
-                totalPrice1 += productTotalPrice
-            }
+            var totalPrice1 = calculateTotal() // Variable to store the total price
             Log.d("totalPrice1", "onCreateView: "+selectedProducts.toString()+totalPrice1)
 
             sharedPref = requireContext().getSharedPreferences("myPrefs", Context.MODE_PRIVATE)
 
 
-                val products = listOf(ProductIDQuantity(5,1),ProductIDQuantity(6,1))
+                val products = dataholder3.map{card -> ProductIDQuantity(card.id, card.quantity)}
                 val order = OrdreSet(totalPrice1.toString(), products = products)// Create a new instance of the Project object with the required data
 
                 val retrofit = ServiceBuilderRetrofit.buildService(RetrofitAPIInterface::class.java)
@@ -256,6 +243,42 @@ class WishListFragment : Fragment() {
 
 
         return wishlistData
+    }
+
+
+    override fun onUpdateValue(name: String, quantity: Int) {
+        val index = this.dataholder3.indexOfFirst { card ->
+             card.name == name
+        }
+        index.let {
+            dataholder3[index].quantity = quantity
+        }
+        val total = calculateTotal()
+        textViewTotal.text = "$total €"
+    }
+
+    override fun remove(id: Long) {
+        val index = this.dataholder3.indexOfFirst { card ->
+            card.id == id
+        }
+        index.let {
+            dataholder3.removeAt(it)
+        }
+        recyclerViewCardList.adapter?.notifyDataSetChanged()
+        val total = calculateTotal()
+        textViewTotal.text = "$total €"
+    }
+
+    private fun calculateTotal(): Double {
+        var total: Double = 0.0
+        for (selectedProduct in dataholder3) {
+            val quantity = selectedProduct.quantity
+            val price = selectedProduct.price
+
+            val productTotalPrice = quantity * price
+            total += productTotalPrice
+        }
+        return total
     }
 
 }

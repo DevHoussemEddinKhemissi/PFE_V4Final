@@ -132,7 +132,7 @@ class DetailProduit : AppCompatActivity() {
             val db = database.writableDatabase
 
             val productName = stoItem!!?.name.toString()
-
+            val productId = stoItem!!.id
 
             val selection = "${DatabaseContract.WishlistEntry.COLUMN_NAME} = ?"
             val selectionArgs = arrayOf(productName)
@@ -152,6 +152,7 @@ class DetailProduit : AppCompatActivity() {
             } else {
 
                 val contentValues = ContentValues().apply {
+                    put(DatabaseContract.WishlistEntry.COLUMN_ID, productId)
                     put(DatabaseContract.WishlistEntry.COLUMN_NAME, productName)
                     put(DatabaseContract.WishlistEntry.COLUMN_IMAGE, imageinsert)
                     put(DatabaseContract.WishlistEntry.COLUMN_STOCK, stockinsert)

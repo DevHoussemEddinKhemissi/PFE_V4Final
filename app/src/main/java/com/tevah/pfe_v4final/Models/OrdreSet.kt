@@ -6,6 +6,6 @@ data class OrdreSet(
 )
 
 data class ProductIDQuantity(
-    val id: Int,
+    val id: Long,
     val quantity: Int
 )

@@ -27,9 +27,7 @@
         <activity
             android:name=".EditprofilmtActivity"
             android:exported="false" />
-        <activity
-            android:name=".ProfilEditActivity"
-            android:exported="false" />
+
         <activity
             android:name=".paymentnotpassedActivity"
             android:exported="false" />
